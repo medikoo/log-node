@@ -1,5 +1,5 @@
 {
-  "name": "log4-node",
+  "name": "log4-nodejs",
   "version": "1.0.0",
   "description": "Node.js log generator for log4 engine",
   "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",

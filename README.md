@@ -2,7 +2,7 @@
 ![Transpilation status][transpilation-image]
 [![npm version][npm-image]][npm-url]
 
-# log4-node
+# log4-nodejs
 
 ## [Node.js](https://nodejs.org/) dedicated [log4](https://github.com/medikoo/log4/) logger
 
@@ -11,7 +11,7 @@
 At beginning of main module of your program require:
 
 ```javascript
-require("log4-node");
+require("log4-nodejs");
 ```
 
 [nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/log4-node/branches/master/shields_badge.svg
