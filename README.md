@@ -14,8 +14,8 @@ At beginning of main module of your program require:
 require("log4-nodejs");
 ```
 
-[nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/log4-node/branches/master/shields_badge.svg
-[nix-build-url]: https://semaphoreci.com/medikoo-org/log4-node
+[nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/log4-nodejs/branches/master/shields_badge.svg
+[nix-build-url]: https://semaphoreci.com/medikoo-org/log4-nodejs
 [transpilation-image]: https://img.shields.io/badge/transpilation-free-brightgreen.svg
-[npm-image]: https://img.shields.io/npm/v/log4-node.svg
-[npm-url]: https://www.npmjs.com/package/log4-node
+[npm-image]: https://img.shields.io/npm/v/log4-nodejs.svg
+[npm-url]: https://www.npmjs.com/package/log4-nodejs
