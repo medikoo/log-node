@@ -1,0 +1,32 @@
+{
+  "name": "log4-node",
+  "version": "1.0.0",
+  "description": "Node.js log generator for log4 engine",
+  "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
+  "keywords": ["log", "log4", "logger", "debug", "bunyan", "winston"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medikoo/log4-node.git"
+  },
+  "dependencies": {
+    "cli-color": "^1.2",
+    "es5-ext": "^0.10.41",
+    "log4": "2",
+    "supports-color": "^5.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-medikoo-es5": "^1.4.8"
+  },
+  "eslintConfig": {
+    "extends": "medikoo-es5",
+    "root": true,
+    "env": {
+      "node": true
+    }
+  },
+  "scripts": {
+    "lint": "eslint --ignore-path=.gitignore ."
+  },
+  "license": "ISC"
+}
