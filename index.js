@@ -28,7 +28,7 @@ module.exports = function () {
 	setupVisibility(conf);
 
 	// Resolve eventual colors setup (as in debug lib)
-	if (supportsColor && process.env.LOG4_COLORS !== "no") {
+	if (supportsColor && process.env.LOG_COLORS !== "no") {
 		var colors;
 		if (supportsColor.level >= 2) {
 			colors = [
