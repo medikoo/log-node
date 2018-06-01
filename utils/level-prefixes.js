@@ -1,6 +1,7 @@
 "use strict";
 
-const clc                = require("cli-color/bare")
+const entries            = require("es5-ext/object/entries")
+    , clc                = require("cli-color/bare")
     , defaultSymbols     = require("log4/writer-utils/level-symbols")
     , colorsSupportLevel = require("../lib/colors-support-level");
 
@@ -23,7 +24,7 @@ if (!colorsSupportLevel) {
 	return;
 }
 const coloredSymbols = module.exports = {};
-for (const [levelName, colorDecorator] of Object.entries({
+for (const [levelName, colorDecorator] of entries({
 	debug: clc.blackBright,
 	info: clc.blueBright,
 	notice: clc.yellow,
