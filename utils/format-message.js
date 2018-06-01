@@ -1,8 +1,14 @@
 "use strict";
 
-const toNaturalNumber    = require("es5-ext/number/to-pos-integer")
-    , { inspect }        = require("util")
-    , colorsSupportLevel = require("../lib/colors-support-level");
+const toNaturalNumber        = require("es5-ext/number/to-pos-integer")
+    , generateFormatFunction = require("sprintf-kit")
+    , decimalModifier        = require("sprintf-kit/modifiers/d")
+    , floatModifier          = require("sprintf-kit/modifiers/f")
+    , integerModifier        = require("sprintf-kit/modifiers/i")
+    , jsonModifier           = require("sprintf-kit/modifiers/j")
+    , stringModifier         = require("sprintf-kit/modifiers/s")
+    , { inspect }            = require("util")
+    , colorsSupportLevel     = require("../lib/colors-support-level");
 
 let inspectDepth = Number(process.env.LOG_INSPECT_DEPTH || process.env.DEBUG_DEPTH);
 if (inspectDepth && inspectDepth !== Infinity) inspectDepth = toNaturalNumber(inspectDepth);
@@ -13,14 +19,14 @@ const allPropertiesInspectOptions = Object.assign(
 	{ showHidden: true, showProxy: true }, visiblePropertiesInspectOptions
 );
 
-const format = require("sprintf-kit")({
-	d: require("sprintf-kit/modifiers/d"),
-	f: require("sprintf-kit/modifiers/f"),
-	i: require("sprintf-kit/modifiers/i"),
-	j: require("sprintf-kit/modifiers/j"),
+const format = generateFormatFunction({
+	d: decimalModifier,
+	f: floatModifier,
+	i: integerModifier,
+	j: jsonModifier,
 	o: value => inspect(value, allPropertiesInspectOptions),
 	O: value => inspect(value, visiblePropertiesInspectOptions),
-	s: require("sprintf-kit/modifiers/s"),
+	s: stringModifier,
 	rest: (args, formatStringData) =>
 		`${ formatStringData ? " " : "" }${ args
 			.map(arg => inspect(arg, visiblePropertiesInspectOptions))
