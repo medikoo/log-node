@@ -21,6 +21,7 @@ const colors = (() => {
 let lastColorIndex = 0;
 
 module.exports = logger => {
+	if (!logger.namespace) return null;
 	const color = (() => {
 		if (logger.namespaceAnsiColor) return logger.namespaceAnsiColor;
 		const assignedColor = colors[lastColorIndex++];

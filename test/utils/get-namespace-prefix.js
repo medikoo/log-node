@@ -195,5 +195,26 @@ test("getNamespacePrefix", t => {
 		});
 		t.end();
 	});
+
+	t.test("Should return null for non-namespaced logger", t => {
+		const { log, getNamespacePrefix } = overrideEnv(() =>
+			requireUncached(
+				[
+					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
+					require.resolve("../../utils/get-namespace-prefix"),
+					require.resolve("supports-color"),
+					require.resolve("../../lib/colors-support-level")
+				],
+				() => {
+					require("supports-color").stderr = { level: 2 };
+					return {
+						log: require("log4"),
+						getNamespacePrefix: require("../../utils/get-namespace-prefix")
+					};
+				}
+			));
+		t.equal(getNamespacePrefix(log), null);
+		t.end();
+	});
 	t.end();
 });
