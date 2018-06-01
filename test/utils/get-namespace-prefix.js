@@ -10,7 +10,7 @@ test("getNamespacePrefix", t => {
 			const { log, getNamespacePrefix } = overrideEnv(() =>
 				requireUncached(
 					[
-						require.resolve("log4"),
+						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
 						require.resolve("../../utils/get-namespace-prefix"),
 						require.resolve("supports-color"),
 						require.resolve("../../lib/colors-support-level")
@@ -40,7 +40,7 @@ test("getNamespacePrefix", t => {
 			const { log, getNamespacePrefix } = overrideEnv(() =>
 				requireUncached(
 					[
-						require.resolve("log4"),
+						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
 						require.resolve("../../utils/get-namespace-prefix"),
 						require.resolve("supports-color"),
 						require.resolve("../../lib/colors-support-level")
@@ -79,7 +79,8 @@ test("getNamespacePrefix", t => {
 		const { log, getNamespacePrefix } = overrideEnv(() =>
 			requireUncached(
 				[
-					require.resolve("log4"), require.resolve("../../utils/get-namespace-prefix"),
+					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
+					require.resolve("../../utils/get-namespace-prefix"),
 					require.resolve("supports-color"),
 					require.resolve("../../lib/colors-support-level")
 				],
@@ -102,7 +103,7 @@ test("getNamespacePrefix", t => {
 			const { log, getNamespacePrefix } = overrideEnv(() =>
 				requireUncached(
 					[
-						require.resolve("log4"),
+						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
 						require.resolve("../../utils/get-namespace-prefix"),
 						require.resolve("supports-color"),
 						require.resolve("../../lib/colors-support-level")
@@ -126,7 +127,7 @@ test("getNamespacePrefix", t => {
 			const { log, getNamespacePrefix } = overrideEnv(() =>
 				requireUncached(
 					[
-						require.resolve("log4"),
+						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
 						require.resolve("../../utils/get-namespace-prefix"),
 						require.resolve("supports-color"),
 						require.resolve("../../lib/colors-support-level")
@@ -148,7 +149,7 @@ test("getNamespacePrefix", t => {
 			const { log, getNamespacePrefix } = overrideEnv(() =>
 				requireUncached(
 					[
-						require.resolve("log4"),
+						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
 						require.resolve("../../utils/get-namespace-prefix"),
 						require.resolve("supports-color"),
 						require.resolve("../../lib/colors-support-level")
@@ -172,7 +173,7 @@ test("getNamespacePrefix", t => {
 			const { log, getNamespacePrefix } = overrideEnv(() =>
 				requireUncached(
 					[
-						require.resolve("log4"),
+						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
 						require.resolve("../../utils/get-namespace-prefix"),
 						require.resolve("supports-color"),
 						require.resolve("../../lib/colors-support-level")
