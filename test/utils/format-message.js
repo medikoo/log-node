@@ -48,7 +48,7 @@ test("formatMessage", t => {
 				logger: namespacedLogger
 			}),
 			"debug foo foo bar 20.2 21.21 22 { \"foo\": \"bar\" } " +
-				"{ foo: 'bar', [hidden]: 'elo' } { foo: 'bar' } then'maro' 'rest' 'arg'",
+				"{ foo: 'bar', [hidden]: 'elo' } { foo: 'bar' } thenmaro 'rest' 'arg'",
 			"Supports sprintf formatting with rest params"
 		);
 		const circularObj = {};

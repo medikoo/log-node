@@ -55,8 +55,7 @@ const format = generateFormatFunction({
 		inspect(JSON.parse(stringValue), jsonInspectOptions)),
 	o: value => inspect(value, allPropertiesInspectOptions),
 	O: value => inspect(value, visiblePropertiesInspectOptions),
-	s: getModifier(stringModifier, stringValue =>
-		inspect(stringValue, visiblePropertiesInspectOptions)),
+	s: stringModifier,
 	rest: (args, formatStringData) =>
 		`${ formatStringData ? " " : "" }${ args
 			.map(arg => inspect(arg, visiblePropertiesInspectOptions))
