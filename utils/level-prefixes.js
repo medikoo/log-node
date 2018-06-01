@@ -24,7 +24,7 @@ if (!colorsSupportLevel) {
 }
 const coloredSymbols = module.exports = {};
 for (const [levelName, colorDecorator] of Object.entries({
-	debug: clc.white,
+	debug: clc.blackBright,
 	info: clc.blueBright,
 	notice: clc.yellow,
 	warning: clc.yellowBright,
