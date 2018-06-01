@@ -30,7 +30,7 @@ require("log4-nodejs")();
 
 [nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/log4-nodejs/branches/master/shields_badge.svg
 [nix-build-url]: https://semaphoreci.com/medikoo-org/log4-nodejs
-[win-build-image]: https://ci.appveyor.com/api/projects/status/?svg=true
+[win-build-image]: https://ci.appveyor.com/api/projects/status/tqetc30h571osc2n?svg=true
 [win-build-url]: https://ci.appveyor.com/project/medikoo/log4-nodejs
 [cov-image]: https://img.shields.io/codecov/c/github/medikoo/log4-nodejs.svg
 [cov-url]: https://codecov.io/gh/medikoo/log4-nodejs
