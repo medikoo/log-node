@@ -9,7 +9,7 @@ const symbols = (() => {
 	return {
 		debug: "*",
 		info: "i",
-		notice: "→",
+		notice: "n",
 		warning: "‼",
 		error: "×",
 		critical: "×",
