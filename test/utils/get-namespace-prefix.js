@@ -64,13 +64,6 @@ test("getNamespacePrefix", t => {
 				getNamespacePrefix(log.get("foo").get("bar")),
 				getNamespacePrefix(log.get("foo").get("bar"))
 			);
-			[1, 2, 3, 4, 5, 6, 7, 8, 9].reduce((otherLogger, index) => {
-				const namespacedLogger = log.get(`foo${ index }`);
-				getNamespacePrefix(namespacedLogger);
-				t.equal(isFinite(namespacedLogger.namespaceAnsiColor), true);
-				t.notEqual(otherLogger.namespaceAnsiColor, namespacedLogger.namespaceAnsiColor);
-				return namespacedLogger;
-			}, log.get("foo"));
 			t.end();
 		});
 		t.end();
@@ -193,6 +186,36 @@ test("getNamespacePrefix", t => {
 			t.notEqual(prefix, log.get("foo").namespace);
 			t.end();
 		});
+		t.end();
+	});
+	t.test("Should reuse namespace color across levels", t => {
+		const { log, getNamespacePrefix } = overrideEnv(() =>
+			requireUncached(
+				[
+					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
+					require.resolve("../../utils/get-namespace-prefix"),
+					require.resolve("supports-color"),
+					require.resolve("../../lib/colors-support-level")
+				],
+				() => {
+					require("supports-color").stderr = { level: 1 };
+					return {
+						log: require("log4"),
+						getNamespacePrefix: require("../../utils/get-namespace-prefix")
+					};
+				}
+			));
+
+		getNamespacePrefix(log.get("foo"));
+		getNamespacePrefix(log.error.get("foo"));
+		t.equal(log.get("foo").namespaceAnsiColor, log.error.get("foo").namespaceAnsiColor);
+		[1, 2, 3, 4, 5, 6, 7, 8, 9].reduce((otherLogger, index) => {
+			const namespacedLogger = log.get(`foo${ index }`);
+			getNamespacePrefix(namespacedLogger);
+			t.equal(isFinite(namespacedLogger.namespaceAnsiColor), true);
+			t.notEqual(otherLogger.namespaceAnsiColor, namespacedLogger.namespaceAnsiColor);
+			return namespacedLogger;
+		}, log.get("foo"));
 		t.end();
 	});
 

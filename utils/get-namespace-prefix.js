@@ -20,13 +20,21 @@ const colors = (() => {
 })();
 let lastColorIndex = 0;
 
+const namespaceColorsMap = new Map();
+
 module.exports = logger => {
 	if (!logger.namespace) return null;
 	const color = (() => {
 		if (logger.namespaceAnsiColor) return logger.namespaceAnsiColor;
-		const assignedColor = colors[lastColorIndex++];
-		if (lastColorIndex === colors.length) lastColorIndex = 0;
-		logger.levelRoot.get(logger.namespaceTokens[0]).namespaceAnsiColor = assignedColor;
+		const [rootNamespace] = logger.namespaceTokens;
+		const assignedColor = (() => {
+			if (namespaceColorsMap.has(rootNamespace)) return namespaceColorsMap.get(rootNamespace);
+			const newColor = colors[lastColorIndex++];
+			if (lastColorIndex === colors.length) lastColorIndex = 0;
+			namespaceColorsMap.set(rootNamespace, newColor);
+			return newColor;
+		})();
+		logger.levelRoot.get(rootNamespace).namespaceAnsiColor = assignedColor;
 		return assignedColor;
 	})();
 	return `\u001b[3${ color < 8 ? color : `8;5;${ color }` };1m${ logger.namespace }\u001b[39;22m`;
