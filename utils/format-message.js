@@ -18,12 +18,32 @@ const visiblePropertiesInspectOptions = { depth: inspectDepth, colors: colorsSup
 const allPropertiesInspectOptions = Object.assign(
 	{ showHidden: true, showProxy: true }, visiblePropertiesInspectOptions
 );
+const jsonInspectOptions = Object.assign(
+	{
+		stylize: (str, styleType) => {
+			// Hack Node.js inspect to show JSON as JSON
+			if (styleType === "name") str = `"${ str }"`;
+			else if (styleType === "string") str = `"${ str.slice(1, -1) }"`;
+			if (!colorsSupportLevel) return str;
+			const style = inspect.styles[styleType];
+			if (style === undefined) return str;
+			const color = inspect.colors[style];
+			return `\u001b[${ color[0] }m${ str }\u001b[${ color[1] }m`;
+		}
+	},
+	visiblePropertiesInspectOptions,
+	{ colors: false }
+);
 
 const format = generateFormatFunction({
 	d: decimalModifier,
 	f: floatModifier,
 	i: integerModifier,
-	j: jsonModifier,
+	j: value => {
+		const stringValue = jsonModifier(value);
+		if (stringValue[0] === "<") return stringValue; // pass thru errors
+		return inspect(JSON.parse(stringValue), jsonInspectOptions);
+	},
 	o: value => inspect(value, allPropertiesInspectOptions),
 	O: value => inspect(value, visiblePropertiesInspectOptions),
 	s: stringModifier,
