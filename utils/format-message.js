@@ -16,7 +16,11 @@ let inspectDepth = Number(process.env.LOG_INSPECT_DEPTH || process.env.DEBUG_DEP
 if (inspectDepth && inspectDepth !== Infinity) inspectDepth = toNaturalNumber(inspectDepth);
 if (!inspectDepth) inspectDepth = 4;
 
-const visiblePropertiesInspectOptions = { depth: inspectDepth, colors: colorsSupportLevel };
+const visiblePropertiesInspectOptions = {
+	breakLength: 120,
+	depth: inspectDepth,
+	colors: colorsSupportLevel
+};
 const allPropertiesInspectOptions = Object.assign(
 	{ showHidden: true, showProxy: true }, visiblePropertiesInspectOptions
 );
