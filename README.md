@@ -9,7 +9,7 @@
 ## [log4](https://github.com/medikoo/log4/) log writer for typical [Node.js](https://nodejs.org/) processes
 
 *   Writes to `stderr` stream.
-*   Printf-like message formatting. See: [Output message formatting](https://github.com/medikoo/log4#output-message-formatting) for details
+*   [Printf-like message formatting](https://github.com/medikoo/log4#output-message-formatting)
 *   Configure log level visbility threshold through [`LOG_LEVEL`](https://github.com/medikoo/log4#log_level) env variable (defaults to `warning`)
 *   Extra debug output can be controlled via [`LOG_DEBUG`](https://github.com/medikoo/log4#log_debug) env variable (fallbacks to `DEBUG` if provided)
 *   Outputs colored logs if terminal supports it (can overriden through `DEBUG_COLORS` env variable)
