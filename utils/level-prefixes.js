@@ -12,9 +12,9 @@ const symbols = (() => {
 		notice: "→",
 		warning: "‼",
 		error: "×",
-		critical: "█",
-		alert: "⁂",
-		emergency: "[█]"
+		critical: "×",
+		alert: "×",
+		emergency: "×"
 	};
 })();
 
@@ -29,9 +29,9 @@ for (const [levelName, colorDecorator] of Object.entries({
 	notice: clc.yellow,
 	warning: clc.yellowBright,
 	error: clc.redBright,
-	critical: clc.redBright,
-	alert: clc.redBright,
-	emergency: clc.redBright
+	critical: clc.bgRedBright.whiteBright,
+	alert: clc.bgRedBright.whiteBright,
+	emergency: clc.bgRedBright.whiteBright
 })) {
 	coloredSymbols[levelName] = colorDecorator(symbols[levelName]);
 }
