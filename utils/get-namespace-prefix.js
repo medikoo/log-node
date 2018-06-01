@@ -18,22 +18,25 @@ const colors = (() => {
 	}
 	return [6, 2, 3, 4, 5, 1];
 })();
-let lastColorIndex = 0;
 
-const namespaceColorsMap = new Map();
+// Simple deterministic namespace to color resolver
+// Credit: visionmedia/debug
+// https://github.com/visionmedia/debug/blob/22f993216dcdcee07eb0601ea71a917e4925a30a/src/common.js#L46-L55
+const assignColor = namespace => {
+	let hash = 0;
+	for (const char of namespace) {
+		hash = (hash << 5) - hash + char.charCodeAt(0);
+		hash |= 0; // Convert to 32bit integer
+	}
+	return colors[Math.abs(hash) % colors.length];
+};
 
 module.exports = logger => {
 	if (!logger.namespace) return null;
 	const color = (() => {
 		if (logger.namespaceAnsiColor) return logger.namespaceAnsiColor;
 		const [rootNamespace] = logger.namespaceTokens;
-		const assignedColor = (() => {
-			if (namespaceColorsMap.has(rootNamespace)) return namespaceColorsMap.get(rootNamespace);
-			const newColor = colors[lastColorIndex++];
-			if (lastColorIndex === colors.length) lastColorIndex = 0;
-			namespaceColorsMap.set(rootNamespace, newColor);
-			return newColor;
-		})();
+		const assignedColor = assignColor(rootNamespace);
 		logger.levelRoot.get(rootNamespace).namespaceAnsiColor = assignedColor;
 		return assignedColor;
 	})();

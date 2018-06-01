@@ -42,7 +42,8 @@
       "node": true
     },
     "rules": {
-      "id-length": "off"
+      "id-length": "off",
+      "no-bitwise": "off"
     }
   },
   "scripts": {
