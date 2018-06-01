@@ -42,13 +42,13 @@ test("formatMessage", t => {
 		t.equal(
 			formatMessage({
 				messageTokens: [
-					"foo bar %d %f %i %j %o %O then", 20.2, 21.21, 22.22, testObj, testObj, testObj,
-					"rest", "arg"
+					"foo bar %d %f %i %j %o %O then%s", 20.2, 21.21, 22.22, testObj, testObj,
+					testObj, "maro", "rest", "arg"
 				],
 				logger: namespacedLogger
 			}),
 			"debug foo foo bar 20.2 21.21 22 { \"foo\": \"bar\" } " +
-				"{ foo: 'bar', [hidden]: 'elo' } { foo: 'bar' } then 'rest' 'arg'",
+				"{ foo: 'bar', [hidden]: 'elo' } { foo: 'bar' } then'maro' 'rest' 'arg'",
 			"Supports sprintf formatting with rest params"
 		);
 		const circularObj = {};

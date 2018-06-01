@@ -38,19 +38,25 @@ const jsonInspectOptions = Object.assign(
 );
 
 const decorateInvalidValue = colorsSupportLevel ? clc.blackBright : identity;
+const getModifier = (basicModifier, inspectModifier) => value => {
+	const stringValue = basicModifier(value);
+	if (stringValue[0] === "<") return decorateInvalidValue(stringValue); // pass thru errors
+	return inspectModifier(stringValue);
+};
 
 const format = generateFormatFunction({
-	d: decimalModifier,
-	f: floatModifier,
-	i: integerModifier,
-	j: value => {
-		const stringValue = jsonModifier(value);
-		if (stringValue[0] === "<") return decorateInvalidValue(stringValue); // pass thru errors
-		return inspect(JSON.parse(stringValue), jsonInspectOptions);
-	},
+	d: getModifier(decimalModifier, stringValue =>
+		inspect(Number(stringValue), visiblePropertiesInspectOptions)),
+	f: getModifier(floatModifier, stringValue =>
+		inspect(Number(stringValue), visiblePropertiesInspectOptions)),
+	i: getModifier(integerModifier, stringValue =>
+		inspect(Number(stringValue), visiblePropertiesInspectOptions)),
+	j: getModifier(jsonModifier, stringValue =>
+		inspect(JSON.parse(stringValue), jsonInspectOptions)),
 	o: value => inspect(value, allPropertiesInspectOptions),
 	O: value => inspect(value, visiblePropertiesInspectOptions),
-	s: stringModifier,
+	s: getModifier(stringModifier, stringValue =>
+		inspect(stringValue, visiblePropertiesInspectOptions)),
 	rest: (args, formatStringData) =>
 		`${ formatStringData ? " " : "" }${ args
 			.map(arg => inspect(arg, visiblePropertiesInspectOptions))
