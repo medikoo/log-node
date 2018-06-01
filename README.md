@@ -8,12 +8,11 @@
 
 ## [log4](https://github.com/medikoo/log4/) log writer for typical [Node.js](https://nodejs.org/) processes
 
-*   Writes logs to process `stderr` stream.
-*   Supports printf-like message formatting. See -> [Output message formatting](https://github.com/medikoo/log4#output-message-formatting) for detailed information
-*   Log level visbility threshold can be configured via [`LOG_LEVEL`](https://github.com/medikoo/log4#log_level) env variable (defaults to `warning`)
-*   Extra debug logs output can be controlled via via [`LOG_DEBUG`](https://github.com/medikoo/log4#log_debug) env variable (if `LOG_DEBUG` is not present, settings are read from `DEBUG`)
-*   Detects terminal colors support and outputs colored logs if possible.
-    Behavior can overriden via `DEBUG_COLORS` env variable
+*   Writes to `stderr` stream.
+*   Printf-like message formatting. See: [Output message formatting](https://github.com/medikoo/log4#output-message-formatting) for details
+*   Configure Log level visbility through [`LOG_LEVEL`](https://github.com/medikoo/log4#log_level) env variable (defaults to `warning`)
+*   Extra debug logs output can be controlled via via [`LOG_DEBUG`](https://github.com/medikoo/log4#log_debug) env variable (fallbacks to `DEBUG` if provided)
+*   Outputs colored logs if terminal supports it (can overriden through `DEBUG_COLORS` env variable)
 *   Object inspection depth defaults to `4`, but can be overriden via `LOG_INSPECT_DEPTH` (fallbacks to `DEBUG_DEPTH` if provided)
 
 ### Usage
