@@ -1,6 +1,7 @@
 "use strict";
 
 const toNaturalNumber        = require("es5-ext/number/to-pos-integer")
+    , identity               = require("es5-ext/function/identity")
     , generateFormatFunction = require("sprintf-kit")
     , decimalModifier        = require("sprintf-kit/modifiers/d")
     , floatModifier          = require("sprintf-kit/modifiers/f")
@@ -8,6 +9,7 @@ const toNaturalNumber        = require("es5-ext/number/to-pos-integer")
     , jsonModifier           = require("sprintf-kit/modifiers/j")
     , stringModifier         = require("sprintf-kit/modifiers/s")
     , { inspect }            = require("util")
+    , clc                    = require("cli-color/bare")
     , colorsSupportLevel     = require("../lib/colors-support-level");
 
 let inspectDepth = Number(process.env.LOG_INSPECT_DEPTH || process.env.DEBUG_DEPTH);
@@ -35,13 +37,15 @@ const jsonInspectOptions = Object.assign(
 	{ colors: false }
 );
 
+const decorateInvalidValue = colorsSupportLevel ? clc.blackBright : identity;
+
 const format = generateFormatFunction({
 	d: decimalModifier,
 	f: floatModifier,
 	i: integerModifier,
 	j: value => {
 		const stringValue = jsonModifier(value);
-		if (stringValue[0] === "<") return stringValue; // pass thru errors
+		if (stringValue[0] === "<") return decorateInvalidValue(stringValue); // pass thru errors
 		return inspect(JSON.parse(stringValue), jsonInspectOptions);
 	},
 	o: value => inspect(value, allPropertiesInspectOptions),
