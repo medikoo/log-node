@@ -40,6 +40,8 @@ const jsonInspectOptions = Object.assign(
 	visiblePropertiesInspectOptions,
 	{ colors: false }
 );
+const stringInspectOptions = Object.assign({}, visiblePropertiesInspectOptions, { colors: false });
+const decorateStringValue = colorsSupportLevel ? clc.green : identity;
 
 const decorateInvalidValue = colorsSupportLevel ? clc.blackBright : identity;
 const getModifier = (basicModifier, inspectModifier) => value => {
@@ -59,7 +61,8 @@ const format = generateFormatFunction({
 		inspect(JSON.parse(stringValue), jsonInspectOptions)),
 	o: value => inspect(value, allPropertiesInspectOptions),
 	O: value => inspect(value, visiblePropertiesInspectOptions),
-	s: stringModifier,
+	s: getModifier(stringModifier, stringValue =>
+		decorateStringValue(inspect(stringValue, stringInspectOptions).slice(1, -1))),
 	rest: (args, formatStringData) =>
 		`${ formatStringData ? " " : "" }${ args
 			.map(arg => inspect(arg, visiblePropertiesInspectOptions))
