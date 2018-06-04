@@ -12,10 +12,12 @@ const toNaturalNumber        = require("es5-ext/number/to-pos-integer")
     , clc                    = require("cli-color/bare")
     , colorsSupportLevel     = require("../lib/colors-support-level");
 
+// Resolve intended inspect depth
 let inspectDepth = Number(process.env.LOG_INSPECT_DEPTH || process.env.DEBUG_DEPTH);
 if (inspectDepth && inspectDepth !== Infinity) inspectDepth = toNaturalNumber(inspectDepth);
 if (!inspectDepth) inspectDepth = 4;
 
+// Preconfigure inspect options for each case
 const visiblePropertiesInspectOptions = {
 	breakLength: 120,
 	depth: inspectDepth,
@@ -41,8 +43,9 @@ const jsonInspectOptions = Object.assign(
 	{ colors: false }
 );
 const stringInspectOptions = Object.assign({}, visiblePropertiesInspectOptions, { colors: false });
-const decorateStringValue = colorsSupportLevel ? clc.green : identity;
 
+// format utils
+const decorateStringValue = colorsSupportLevel ? clc.green : identity;
 const decorateInvalidValue = colorsSupportLevel ? clc.blackBright : identity;
 const getModifier = (basicModifier, inspectModifier) => value => {
 	const stringValue = basicModifier(value);
