@@ -2,12 +2,12 @@
 
 const toNaturalNumber        = require("es5-ext/number/to-pos-integer")
     , identity               = require("es5-ext/function/identity")
+    , isCallable             = require("es5-ext/object/is-callable")
     , generateFormatFunction = require("sprintf-kit")
     , decimalModifier        = require("sprintf-kit/modifiers/d")
     , floatModifier          = require("sprintf-kit/modifiers/f")
     , integerModifier        = require("sprintf-kit/modifiers/i")
     , jsonModifier           = require("sprintf-kit/modifiers/j")
-    , stringModifier         = require("sprintf-kit/modifiers/s")
     , { inspect }            = require("util")
     , clc                    = require("cli-color/bare")
     , colorsSupportLevel     = require("../lib/colors-support-level");
@@ -64,8 +64,15 @@ const format = generateFormatFunction({
 		inspect(JSON.parse(stringValue), jsonInspectOptions)),
 	o: value => inspect(value, allPropertiesInspectOptions),
 	O: value => inspect(value, visiblePropertiesInspectOptions),
-	s: getModifier(stringModifier, stringValue =>
-		decorateStringValue(inspect(stringValue, stringInspectOptions).slice(1, -1))),
+	s: value => {
+		try {
+			if (value && isCallable(value.toString)) value = value.toString();
+			else value = String(value);
+		} catch (e) {
+			return decorateInvalidValue("<invalid>");
+		}
+		return decorateStringValue(inspect(value, stringInspectOptions).slice(1, -1));
+	},
 	rest: (args, formatStringData) =>
 		`${ formatStringData ? " " : "" }${ args
 			.map(arg => inspect(arg, visiblePropertiesInspectOptions))
