@@ -1,16 +1,23 @@
 "use strict";
 
 const d                  = require("d")
+    , clc                = require("cli-color/bare")
     , rootLogger         = require("log4")
     , emitter            = require("log4/writer-utils/emitter")
     , registerMaster     = require("log4/writer-utils/register-master")
     , setupVisibility    = require("log4/writer-utils/setup-visibility")
+    , colorsSupportLevel = require("./lib/colors-support-level")
     , formatMessage      = require("./utils/format-message")
     , levelPrefixes      = require("./utils/level-prefixes")
     , getNamespacePrefix = require("./utils/get-namespace-prefix");
 
+const ERROR_LEVEL_INDEX = 4;
+
 const setupPrefixes = levelLogger => {
 	levelLogger.levelMessagePrefix = levelPrefixes[levelLogger.level];
+	if (levelLogger.levelIndex >= ERROR_LEVEL_INDEX && colorsSupportLevel) {
+		levelLogger.messageContentDecorator = clc.red;
+	}
 	Object.defineProperty(
 		levelLogger, "namespaceMessagePrefix",
 		d.gs(function () { return getNamespacePrefix(this); })
