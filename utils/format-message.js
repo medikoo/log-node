@@ -83,6 +83,9 @@ module.exports = event => {
 	if (event.message) return event.message;
 	const { logger } = event;
 	event.messageContent = format(...event.messageTokens);
+	if (logger.messageContentDecorator) {
+		event.messageContent = logger.messageContentDecorator(event.messageContent);
+	}
 	event.message = [logger.levelMessagePrefix, logger.namespaceMessagePrefix, event.messageContent]
 		.filter(Boolean)
 		.join(" ");
