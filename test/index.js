@@ -41,6 +41,7 @@ test("log4-nodejs", t => {
 		t.end();
 	});
 	t.test(t => {
+		t.plan(2);
 		const { log, initializeWriter } = overrideEnv(() =>
 			requireUncached(
 				[
@@ -63,8 +64,13 @@ test("log4-nodejs", t => {
 				"Should decorate error logs when colors are enabled"
 			);
 		log.error("some error");
+		process.stderr.write = string =>
+			t.equal(
+				string, "‼ \x1b[33msome warning\x1b[39m\n",
+				"Should decorate warning logs when colors are enabled"
+			);
+		log.warning("some warning");
 		process.stderr.write = originalWrite;
-		t.end();
 	});
 	t.end();
 });
