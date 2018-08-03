@@ -19,17 +19,17 @@
     "cli-color": "^1.2",
     "d": "1",
     "es5-ext": "^0.10.45",
-    "sprintf-kit": "^1.3",
+    "sprintf-kit": "^1.4",
     "supports-color": "^5.4"
   },
   "devDependencies": {
-    "cjs-module": "^1.3",
-    "eslint": "^4.19.1",
-    "eslint-config-medikoo": "^1.35",
+    "cjs-module": "^1.3.1",
+    "eslint": "^5.2",
+    "eslint-config-medikoo": "^1.37",
     "istanbul": "^0.4.5",
-    "log4": "3",
+    "log4": "^3.0.1",
     "process-utils": "^1.1",
-    "tape": "^4.9",
+    "tape": "^4.9.1",
     "tape-index": "2"
   },
   "peerDependencies": {
