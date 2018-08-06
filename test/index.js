@@ -60,16 +60,16 @@ test("log4-nodejs", t => {
 		const originalWrite = process.stderr.write;
 		process.stderr.write = string =>
 			t.equal(
-				string, "× \x1b[31msome error\x1b[39m\n",
+				string, "× \x1b[31msome \x1b[39mfoo\x1b[31m error\x1b[39m\n",
 				"Should decorate error logs when colors are enabled"
 			);
-		log.error("some error");
+		log.error("some %s error", "foo");
 		process.stderr.write = string =>
 			t.equal(
-				string, "‼ \x1b[33msome warning\x1b[39m\n",
+				string, "‼ \x1b[33msome \x1b[39m12\x1b[33m warning\x1b[39m\n",
 				"Should decorate warning logs when colors are enabled"
 			);
-		log.warning("some warning");
+		log.warning("some %d warning", 12);
 		process.stderr.write = originalWrite;
 	});
 	t.end();

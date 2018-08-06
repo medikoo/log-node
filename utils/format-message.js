@@ -53,6 +53,8 @@ const getModifier = (basicModifier, inspectModifier) => value => {
 	return inspectModifier(stringValue);
 };
 
+let currentLiteralDecorator = identity;
+
 const format = generateFormatFunction({
 	d: getModifier(decimalModifier, stringValue =>
 		inspect(Number(stringValue), visiblePropertiesInspectOptions)),
@@ -73,6 +75,7 @@ const format = generateFormatFunction({
 		}
 		return decorateStringValue(inspect(value, stringInspectOptions).slice(1, -1));
 	},
+	literal: value => currentLiteralDecorator(value),
 	rest: (args, formatStringData) =>
 		`${ formatStringData ? " " : "" }${ args
 			.map(arg => inspect(arg, visiblePropertiesInspectOptions))
@@ -82,10 +85,8 @@ const format = generateFormatFunction({
 module.exports = event => {
 	if (event.message) return event.message;
 	const { logger } = event;
+	currentLiteralDecorator = logger.messageContentDecorator || identity;
 	event.messageContent = format(...event.messageTokens);
-	if (logger.messageContentDecorator) {
-		event.messageContent = logger.messageContentDecorator(event.messageContent);
-	}
 	event.message = [logger.levelMessagePrefix, logger.namespaceMessagePrefix, event.messageContent]
 		.filter(Boolean)
 		.join(" ");
