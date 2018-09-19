@@ -22,7 +22,8 @@ test("formatMessage", t => {
 						formatMessage: require("../../utils/format-message")
 					};
 				}
-			));
+			)
+		);
 		t.equal(
 			formatMessage({ messageTokens: ["foo bar"], logger }), "foo bar",
 			"Should format message with no prefixes"
@@ -92,7 +93,8 @@ test("formatMessage", t => {
 						formatMessage: require("../../utils/format-message")
 					};
 				}
-			));
+			)
+		);
 
 		t.equal(
 			formatMessage({ messageTokens: ["%j %j", { foo: "bar" }, 1], logger }),
@@ -118,7 +120,8 @@ test("formatMessage", t => {
 						formatMessage: require("../../utils/format-message")
 					};
 				}
-			));
+			)
+		);
 		t.equal(
 			formatMessage({ messageTokens: [{ foo: 12, bar: { elo: { frelo: 22 } } }], logger }),
 			"{ foo: 12, bar: { elo: [Object] } }",
