@@ -5,25 +5,27 @@ const d               = require("d")
     , requireUncached = require("cjs-module/require-uncached")
     , overrideEnv     = require("process-utils/override-env");
 
+const resolveUncached = (options = { supportsColorStderr: false }) =>
+	overrideEnv(() =>
+		requireUncached(
+			[
+				require.resolve("log4/writer-utils/emitter"), require.resolve("log4"),
+				require.resolve("../../utils/format-message"), require.resolve("supports-color"),
+				require.resolve("../../lib/colors-support-level")
+			],
+			() => {
+				require("supports-color").stderr = options.supportsColorStderr;
+				return {
+					logger: require("log4"),
+					formatMessage: require("../../utils/format-message")
+				};
+			}
+		)
+	);
+
 test("formatMessage", t => {
 	t.test(t => {
-		const { logger, formatMessage } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4/writer-utils/emitter"), require.resolve("log4"),
-					require.resolve("../../utils/format-message"),
-					require.resolve("supports-color"),
-					require.resolve("../../lib/colors-support-level")
-				],
-				() => {
-					require("supports-color").stderr = false;
-					return {
-						logger: require("log4"),
-						formatMessage: require("../../utils/format-message")
-					};
-				}
-			)
-		);
+		const { logger, formatMessage } = resolveUncached();
 		t.equal(
 			formatMessage({ messageTokens: ["foo bar"], logger }), "foo bar",
 			"Should format message with no prefixes"
@@ -78,23 +80,7 @@ test("formatMessage", t => {
 		t.end();
 	});
 	t.test(t => {
-		const { logger, formatMessage } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4/writer-utils/emitter"), require.resolve("log4"),
-					require.resolve("../../utils/format-message"),
-					require.resolve("supports-color"),
-					require.resolve("../../lib/colors-support-level")
-				],
-				() => {
-					require("supports-color").stderr = { level: 1 };
-					return {
-						logger: require("log4"),
-						formatMessage: require("../../utils/format-message")
-					};
-				}
-			)
-		);
+		const { logger, formatMessage } = resolveUncached({ supportsColorStderr: { level: 1 } });
 
 		t.equal(
 			formatMessage({ messageTokens: ["%j %j", { foo: "bar" }, 1], logger }),
