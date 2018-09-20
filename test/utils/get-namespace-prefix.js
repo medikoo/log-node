@@ -4,25 +4,34 @@ const test            = require("tape")
     , requireUncached = require("cjs-module/require-uncached")
     , overrideEnv     = require("process-utils/override-env");
 
+const resolveUncached = callback => {
+	const { restoreEnv } = overrideEnv();
+	try {
+		return requireUncached(
+			[
+				require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
+				require.resolve("../../utils/get-namespace-prefix"),
+				require.resolve("supports-color"), require.resolve("../../lib/colors-support-level")
+			],
+			() => {
+				callback();
+				return {
+					log: require("log4"),
+					getNamespacePrefix: require("../../utils/get-namespace-prefix")
+				};
+			}
+		);
+	} finally {
+		restoreEnv();
+	}
+};
+
 test("getNamespacePrefix", t => {
 	t.test("Should map colors per each namespace", t => {
 		t.test("In rich colors environment", t => {
-			const { log, getNamespacePrefix } = overrideEnv(() =>
-				requireUncached(
-					[
-						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-						require.resolve("../../utils/get-namespace-prefix"),
-						require.resolve("supports-color"),
-						require.resolve("../../lib/colors-support-level")
-					],
-					() => {
-						require("supports-color").stderr = { level: 2 };
-						return {
-							log: require("log4"),
-							getNamespacePrefix: require("../../utils/get-namespace-prefix")
-						};
-					}
-				));
+			const { log, getNamespacePrefix } = resolveUncached(
+				() => (require("supports-color").stderr = { level: 2 })
+			);
 
 			const prefix = getNamespacePrefix(log.get("foo"));
 			t.equal(typeof prefix, "string");
@@ -37,23 +46,9 @@ test("getNamespacePrefix", t => {
 			t.end();
 		});
 		t.test("In basic colors environment", t => {
-			const { log, getNamespacePrefix } = overrideEnv(() =>
-				requireUncached(
-					[
-						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-						require.resolve("../../utils/get-namespace-prefix"),
-						require.resolve("supports-color"),
-						require.resolve("../../lib/colors-support-level")
-					],
-					() => {
-						require("supports-color").stderr = { level: 1 };
-						return {
-							log: require("log4"),
-							getNamespacePrefix: require("../../utils/get-namespace-prefix")
-						};
-					}
-				));
-
+			const { log, getNamespacePrefix } = resolveUncached(
+				() => (require("supports-color").stderr = { level: 1 })
+			);
 			const prefix = getNamespacePrefix(log.get("foo"));
 			t.equal(typeof prefix, "string");
 			t.equal(typeof getNamespacePrefix(log.get("foo").get("bar")), "string");
@@ -69,22 +64,9 @@ test("getNamespacePrefix", t => {
 		t.end();
 	});
 	t.test("Should map namespace name in non-color environment", t => {
-		const { log, getNamespacePrefix } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-					require.resolve("../../utils/get-namespace-prefix"),
-					require.resolve("supports-color"),
-					require.resolve("../../lib/colors-support-level")
-				],
-				() => {
-					require("supports-color").stderr = false;
-					return {
-						log: require("log4"),
-						getNamespacePrefix: require("../../utils/get-namespace-prefix")
-					};
-				}
-			));
+		const { log, getNamespacePrefix } = resolveUncached(
+			() => (require("supports-color").stderr = false)
+		);
 
 		t.equal(getNamespacePrefix(log.get("foo")), log.get("foo").namespace);
 		t.equal(getNamespacePrefix(log.get("foo").get("bar")), log.get("foo").get("bar").namespace);
@@ -93,23 +75,14 @@ test("getNamespacePrefix", t => {
 
 	t.test("Should support DEBUG_COLORS env var", t => {
 		t.test("Should force basic colors environment, if \"on\" in non-color environment", t => {
-			const { log, getNamespacePrefix } = overrideEnv(() =>
-				requireUncached(
-					[
-						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-						require.resolve("../../utils/get-namespace-prefix"),
-						require.resolve("supports-color"),
-						require.resolve("../../lib/colors-support-level")
-					],
-					() => {
-						require("supports-color").stderr = false;
-						process.env.DEBUG_COLORS = "on";
-						return {
-							log: require("log4"),
-							getNamespacePrefix: require("../../utils/get-namespace-prefix")
-						};
-					}
-				));
+			const { log, getNamespacePrefix } = resolveUncached(() => {
+				require("supports-color").stderr = false;
+				process.env.DEBUG_COLORS = "on";
+				return {
+					log: require("log4"),
+					getNamespacePrefix: require("../../utils/get-namespace-prefix")
+				};
+			});
 
 			const prefix = getNamespacePrefix(log.get("foo"));
 			t.equal(typeof prefix, "string");
@@ -117,45 +90,19 @@ test("getNamespacePrefix", t => {
 			t.end();
 		});
 		t.test("Should turn off colors, if \"off\" in colors environment", t => {
-			const { log, getNamespacePrefix } = overrideEnv(() =>
-				requireUncached(
-					[
-						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-						require.resolve("../../utils/get-namespace-prefix"),
-						require.resolve("supports-color"),
-						require.resolve("../../lib/colors-support-level")
-					],
-					() => {
-						require("supports-color").stderr = { level: 2 };
-						process.env.DEBUG_COLORS = "no";
-						return {
-							log: require("log4"),
-							getNamespacePrefix: require("../../utils/get-namespace-prefix")
-						};
-					}
-				));
+			const { log, getNamespacePrefix } = resolveUncached(() => {
+				require("supports-color").stderr = { level: 2 };
+				process.env.DEBUG_COLORS = "no";
+			});
 
 			t.equal(getNamespacePrefix(log.get("foo")), log.get("foo").namespace);
 			t.end();
 		});
 		t.test("Should not have effect in rich colors environment, if \"on\"", t => {
-			const { log, getNamespacePrefix } = overrideEnv(() =>
-				requireUncached(
-					[
-						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-						require.resolve("../../utils/get-namespace-prefix"),
-						require.resolve("supports-color"),
-						require.resolve("../../lib/colors-support-level")
-					],
-					() => {
-						require("supports-color").stderr = { level: 2 };
-						process.env.DEBUG_COLORS = "yes";
-						return {
-							log: require("log4"),
-							getNamespacePrefix: require("../../utils/get-namespace-prefix")
-						};
-					}
-				));
+			const { log, getNamespacePrefix } = resolveUncached(() => {
+				require("supports-color").stderr = { level: 2 };
+				process.env.DEBUG_COLORS = "yes";
+			});
 
 			const prefix = getNamespacePrefix(log.get("foo"));
 			t.equal(typeof prefix, "string");
@@ -163,23 +110,10 @@ test("getNamespacePrefix", t => {
 			t.end();
 		});
 		t.test("Should have no effect, if not recognized value", t => {
-			const { log, getNamespacePrefix } = overrideEnv(() =>
-				requireUncached(
-					[
-						require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-						require.resolve("../../utils/get-namespace-prefix"),
-						require.resolve("supports-color"),
-						require.resolve("../../lib/colors-support-level")
-					],
-					() => {
-						require("supports-color").stderr = { level: 2 };
-						process.env.DEBUG_COLORS = "habla";
-						return {
-							log: require("log4"),
-							getNamespacePrefix: require("../../utils/get-namespace-prefix")
-						};
-					}
-				));
+			const { log, getNamespacePrefix } = resolveUncached(() => {
+				require("supports-color").stderr = { level: 2 };
+				process.env.DEBUG_COLORS = "habla";
+			});
 
 			const prefix = getNamespacePrefix(log.get("foo"));
 			t.equal(typeof prefix, "string");
@@ -189,22 +123,9 @@ test("getNamespacePrefix", t => {
 		t.end();
 	});
 	t.test("Should reuse namespace color across levels", t => {
-		const { log, getNamespacePrefix } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-					require.resolve("../../utils/get-namespace-prefix"),
-					require.resolve("supports-color"),
-					require.resolve("../../lib/colors-support-level")
-				],
-				() => {
-					require("supports-color").stderr = { level: 1 };
-					return {
-						log: require("log4"),
-						getNamespacePrefix: require("../../utils/get-namespace-prefix")
-					};
-				}
-			));
+		const { log, getNamespacePrefix } = resolveUncached(() => {
+			require("supports-color").stderr = { level: 1 };
+		});
 
 		getNamespacePrefix(log.get("foo"));
 		getNamespacePrefix(log.error.get("foo"));
@@ -220,22 +141,9 @@ test("getNamespacePrefix", t => {
 	});
 
 	t.test("Should return null for non-namespaced logger", t => {
-		const { log, getNamespacePrefix } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-					require.resolve("../../utils/get-namespace-prefix"),
-					require.resolve("supports-color"),
-					require.resolve("../../lib/colors-support-level")
-				],
-				() => {
-					require("supports-color").stderr = { level: 2 };
-					return {
-						log: require("log4"),
-						getNamespacePrefix: require("../../utils/get-namespace-prefix")
-					};
-				}
-			));
+		const { log, getNamespacePrefix } = resolveUncached(() => {
+			require("supports-color").stderr = { level: 2 };
+		});
 		t.equal(getNamespacePrefix(log), null);
 		t.end();
 	});

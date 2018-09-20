@@ -4,22 +4,32 @@ const test            = require("tape")
     , requireUncached = require("cjs-module/require-uncached")
     , overrideEnv     = require("process-utils/override-env");
 
+const resolveUncached = callback => {
+	const { restoreEnv } = overrideEnv();
+	try {
+		return requireUncached(
+			[
+				require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
+				require.resolve("log4/writer-utils/register-master"),
+				require.resolve("log4/writer-utils/setup-visibility"),
+				require.resolve("supports-color"), require.resolve("../lib/colors-support-level"),
+				require.resolve("../")
+			],
+			() => {
+				callback();
+				return { log: require("log4"), initializeWriter: require("../") };
+			}
+		);
+	} finally {
+		restoreEnv();
+	}
+};
+
 test("log4-nodejs", t => {
 	t.test(t => {
-		const { log, initializeWriter } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-					require.resolve("log4/writer-utils/register-master"),
-					require.resolve("log4/writer-utils/setup-visibility"),
-					require.resolve("supports-color"),
-					require.resolve("../lib/colors-support-level"), require.resolve("../")
-				],
-				() => {
-					require("supports-color").stderr = false;
-					return { log: require("log4"), initializeWriter: require("../") };
-				}
-			));
+		const { log, initializeWriter } = resolveUncached(
+			() => (require("supports-color").stderr = false)
+		);
 		initializeWriter();
 		const originalWrite = process.stderr.write;
 		let isInvoked = false;
@@ -42,20 +52,9 @@ test("log4-nodejs", t => {
 	});
 	t.test(t => {
 		t.plan(2);
-		const { log, initializeWriter } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-					require.resolve("log4/writer-utils/register-master"),
-					require.resolve("log4/writer-utils/setup-visibility"),
-					require.resolve("supports-color"),
-					require.resolve("../lib/colors-support-level"), require.resolve("../")
-				],
-				() => {
-					require("supports-color").stderr = { level: 1 };
-					return { log: require("log4"), initializeWriter: require("../") };
-				}
-			));
+		const { log, initializeWriter } = resolveUncached(
+			() => (require("supports-color").stderr = { level: 1 })
+		);
 		initializeWriter();
 		const originalWrite = process.stderr.write;
 		process.stderr.write = string =>

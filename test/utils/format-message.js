@@ -5,27 +5,33 @@ const d               = require("d")
     , requireUncached = require("cjs-module/require-uncached")
     , overrideEnv     = require("process-utils/override-env");
 
-const resolveUncached = (options = { supportsColorStderr: false }) =>
-	overrideEnv(() =>
-		requireUncached(
+const resolveUncached = callback => {
+	const { restoreEnv } = overrideEnv();
+	try {
+		return requireUncached(
 			[
 				require.resolve("log4/writer-utils/emitter"), require.resolve("log4"),
 				require.resolve("../../utils/format-message"), require.resolve("supports-color"),
 				require.resolve("../../lib/colors-support-level")
 			],
 			() => {
-				require("supports-color").stderr = options.supportsColorStderr;
+				callback();
 				return {
 					logger: require("log4"),
 					formatMessage: require("../../utils/format-message")
 				};
 			}
-		)
-	);
+		);
+	} finally {
+		restoreEnv();
+	}
+};
 
 test("formatMessage", t => {
 	t.test(t => {
-		const { logger, formatMessage } = resolveUncached();
+		const { logger, formatMessage } = resolveUncached(
+			() => (require("supports-color").stderr = false)
+		);
 		t.equal(
 			formatMessage({ messageTokens: ["foo bar"], logger }), "foo bar",
 			"Should format message with no prefixes"
@@ -80,7 +86,9 @@ test("formatMessage", t => {
 		t.end();
 	});
 	t.test(t => {
-		const { logger, formatMessage } = resolveUncached({ supportsColorStderr: { level: 1 } });
+		const { logger, formatMessage } = resolveUncached(
+			() => (require("supports-color").stderr = { level: 1 })
+		);
 
 		t.equal(
 			formatMessage({ messageTokens: ["%j %j", { foo: "bar" }, 1], logger }),
@@ -90,24 +98,10 @@ test("formatMessage", t => {
 		t.end();
 	});
 	t.test(t => {
-		const { logger, formatMessage } = overrideEnv(() =>
-			requireUncached(
-				[
-					require.resolve("log4/writer-utils/emitter"), require.resolve("log4"),
-					require.resolve("../../utils/format-message"),
-					require.resolve("supports-color"),
-					require.resolve("../../lib/colors-support-level")
-				],
-				() => {
-					process.env.LOG_INSPECT_DEPTH = "1";
-					require("supports-color").stderr = false;
-					return {
-						logger: require("log4"),
-						formatMessage: require("../../utils/format-message")
-					};
-				}
-			)
-		);
+		const { logger, formatMessage } = resolveUncached(() => {
+			process.env.LOG_INSPECT_DEPTH = "1";
+			require("supports-color").stderr = false;
+		});
 		t.equal(
 			formatMessage({ messageTokens: [{ foo: 12, bar: { elo: { frelo: 22 } } }], logger }),
 			"{ foo: 12, bar: { elo: [Object] } }",
