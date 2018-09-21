@@ -1,9 +1,20 @@
 "use strict";
 
-const colorsSupportLevel = require("../lib/colors-support-level");
+const getDefaultNamespace = require("log4/writer-utils/get-default-namespace")
+    , colorsSupportLevel  = require("../lib/colors-support-level");
+
+const resolveNamespaceString = logger => {
+	if (!logger.namespace) return null;
+	const [rootNamespace] = logger.namespaceTokens;
+	if (getDefaultNamespace() === rootNamespace) {
+		if (logger.namespace === rootNamespace) return null;
+		return logger.namespace.slice(rootNamespace.length);
+	}
+	return logger.namespace;
+};
 
 if (!colorsSupportLevel) {
-	module.exports = logger => logger.namespace;
+	module.exports = resolveNamespaceString;
 	return;
 }
 
@@ -32,7 +43,8 @@ const assignColor = namespace => {
 };
 
 module.exports = logger => {
-	if (!logger.namespace) return null;
+	const namespaceString = resolveNamespaceString(logger);
+	if (!namespaceString) return null;
 	const color = (() => {
 		if (logger.namespaceAnsiColor) return logger.namespaceAnsiColor;
 		const [rootNamespace] = logger.namespaceTokens;
@@ -40,5 +52,5 @@ module.exports = logger => {
 		logger.levelRoot.get(rootNamespace).namespaceAnsiColor = assignedColor;
 		return assignedColor;
 	})();
-	return `\u001b[3${ color < 8 ? color : `8;5;${ color }` };1m${ logger.namespace }\u001b[39;22m`;
+	return `\u001b[3${ color < 8 ? color : `8;5;${ color }` };1m${ namespaceString }\u001b[39;22m`;
 };

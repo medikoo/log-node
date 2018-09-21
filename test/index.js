@@ -30,7 +30,7 @@ test("log4-nodejs", t => {
 		const { log, initializeWriter } = resolveUncached(
 			() => (require("supports-color").stderr = false)
 		);
-		initializeWriter();
+		initializeWriter(null); // null passed to test no options recoverys
 		const originalWrite = process.stderr.write;
 		let isInvoked = false;
 		process.stderr.write = string => {
@@ -55,7 +55,7 @@ test("log4-nodejs", t => {
 		const { log, initializeWriter } = resolveUncached(
 			() => (require("supports-color").stderr = { level: 1 })
 		);
-		initializeWriter();
+		initializeWriter({ defaultNamespace: "marko" });
 		const originalWrite = process.stderr.write;
 		process.stderr.write = string =>
 			t.equal(

@@ -27,13 +27,13 @@
     "eslint": "^5.6",
     "eslint-config-medikoo": "^1.43",
     "istanbul": "^0.4.5",
-    "log4": "^3.0.1",
+    "log4": "^3.1",
     "process-utils": "2",
     "tape": "^4.9.1",
     "tape-index": "2"
   },
   "peerDependencies": {
-    "log4": "3"
+    "log4": "^3.1"
   },
   "eslintConfig": {
     "extends": "medikoo",
