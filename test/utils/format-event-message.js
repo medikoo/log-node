@@ -18,7 +18,7 @@ const resolveUncached = callback => {
 				callback();
 				return {
 					logger: require("log4"),
-					formatMessage: require("../../utils/format-message")
+					formatMessage: require("../../utils/format-event-message")
 				};
 			}
 		);

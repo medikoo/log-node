@@ -9,7 +9,7 @@ const isObject            = require("es5-ext/object/is-object")
     , setupVisibility     = require("log4/writer-utils/setup-visibility")
     , setDefaultNamespace = require("log4/writer-utils/get-default-namespace").set
     , colorsSupportLevel  = require("./lib/colors-support-level")
-    , formatMessage       = require("./utils/format-message")
+    , formatMessage       = require("./utils/format-event-message")
     , levelPrefixes       = require("./utils/level-prefixes")
     , getNamespacePrefix  = require("./utils/get-namespace-prefix");
 
