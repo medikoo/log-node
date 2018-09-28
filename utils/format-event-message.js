@@ -57,13 +57,17 @@ let currentLiteralDecorator = identity;
 
 const format = generateFormatFunction({
 	d: getModifier(decimalModifier, stringValue =>
-		inspect(Number(stringValue), visiblePropertiesInspectOptions)),
+		inspect(Number(stringValue), visiblePropertiesInspectOptions)
+	),
 	f: getModifier(floatModifier, stringValue =>
-		inspect(Number(stringValue), visiblePropertiesInspectOptions)),
+		inspect(Number(stringValue), visiblePropertiesInspectOptions)
+	),
 	i: getModifier(integerModifier, stringValue =>
-		inspect(Number(stringValue), visiblePropertiesInspectOptions)),
+		inspect(Number(stringValue), visiblePropertiesInspectOptions)
+	),
 	j: getModifier(jsonModifier, stringValue =>
-		inspect(JSON.parse(stringValue), jsonInspectOptions)),
+		inspect(JSON.parse(stringValue), jsonInspectOptions)
+	),
 	o: value => inspect(value, allPropertiesInspectOptions),
 	O: value => inspect(value, visiblePropertiesInspectOptions),
 	s: value => {
@@ -77,9 +81,9 @@ const format = generateFormatFunction({
 	},
 	literal: value => currentLiteralDecorator(value),
 	rest: (args, formatStringData) =>
-		`${ formatStringData ? " " : "" }${ args
-			.map(arg => inspect(arg, visiblePropertiesInspectOptions))
-			.join(" ") }`
+		`${ formatStringData ? " " : "" }${
+			args.map(arg => inspect(arg, visiblePropertiesInspectOptions)).join(" ")
+		}`
 });
 
 module.exports = event => {
