@@ -60,27 +60,6 @@ test("formatMessage", t => {
 				"{ foo: 'bar', [hidden]: 'elo' } { foo: 'bar' } thenmaro 'rest' 'arg'",
 			"Supports sprintf formatting with rest params"
 		);
-		const circularObj = {};
-		circularObj.x = circularObj;
-		t.equal(
-			formatMessage({
-				messageTokens: ["%j", circularObj],
-				logger: namespacedLogger
-			}).startsWith("debug foo <"),
-			true, "Handles circular JSON"
-		);
-		t.equal(
-			formatMessage({ messageTokens: [testObj, 21.21], logger: namespacedLogger }),
-			"debug foo { foo: 'bar' } 21.21", "Supports no format string"
-		);
-		t.equal(
-			formatMessage({ messageTokens: ["%s", undefined], logger: namespacedLogger }),
-			"debug foo undefined", "Formats no value with string modifier"
-		);
-		t.equal(
-			formatMessage({ messageTokens: ["%s", Object.create(null)], logger: namespacedLogger }),
-			"debug foo <invalid>", "Handles not stringifiable value with string modifier"
-		);
 		const logEvent = { message: "foo", logger: namespacedLogger };
 		t.equal(formatMessage(logEvent), "foo", "Passes through alredy generated message");
 		t.end();
