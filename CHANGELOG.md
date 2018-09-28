@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/medikoo/log4-node/compare/v2.3.1...v3.0.0) (2018-09-28)
+
+
+### Features
+
+* rename to utils/format-event-message.js ([d3a78f5](https://github.com/medikoo/log4-node/commit/d3a78f5))
+* support default namespace ([5e3c931](https://github.com/medikoo/log4-node/commit/5e3c931))
+
+
+### BREAKING CHANGES
+
+* utils/format-message.js was renamed to utils/format-event-message.js
+
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/medikoo/log4-node/compare/v2.3.0...v2.3.1) (2018-08-06)
 
