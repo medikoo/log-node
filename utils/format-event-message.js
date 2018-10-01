@@ -1,12 +1,12 @@
 "use strict";
 
-const formatPartsResolver = require("./parts-resolver");
+const resolveParts = require("./parts-resolver");
 
 module.exports = event => {
 	if (event.message) return event.message;
 	const { logger } = event;
 
-	const formatData = formatPartsResolver(...event.messageTokens);
+	const formatData = resolveParts(...event.messageTokens);
 	let { literals } = formatData;
 	if (logger.messageContentDecorator) {
 		literals = literals.map(literal => logger.messageContentDecorator(literal));
