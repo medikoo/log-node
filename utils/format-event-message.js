@@ -5,13 +5,13 @@ const getPartsResolver   = require("sprintf-kit/get-parts-resolver")
     , colorsSupportLevel = require("../lib/colors-support-level")
     , inspectDepth       = require("../lib/inspect-depth");
 
-const formatResolver = getPartsResolver(getModifiers({ inspectDepth, colorsSupportLevel }));
+const formatPartsResolver = getPartsResolver(getModifiers({ inspectDepth, colorsSupportLevel }));
 
 module.exports = event => {
 	if (event.message) return event.message;
 	const { logger } = event;
 
-	const formatData = formatResolver(...event.messageTokens);
+	const formatData = formatPartsResolver(...event.messageTokens);
 	let { literals } = formatData;
 	if (logger.messageContentDecorator) {
 		literals = literals.map(literal => logger.messageContentDecorator(literal));
