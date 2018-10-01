@@ -62,10 +62,6 @@ test("formatMessage", t => {
 			"{ foo: 'bar', [hidden]: 'elo' } { foo: 'bar' } thenmaro 'rest' 'arg'",
 		"Supports sprintf formatting with rest params"
 	);
-	t.deepEqual(
-		formatMessage({ messageTokens: [{ foo: 12, bar: { elo: { frelo: 22 } } }], logger }),
-		"debug { foo: 12, bar: { elo: { frelo: 22 } } }", "Supports no format string"
-	);
 	const logEvent = { message: "foo", logger: namespacedLogger };
 	t.equal(formatMessage(logEvent), "foo", "Passes through alredy generated message");
 	t.end();

@@ -1,25 +1,17 @@
 "use strict";
 
-const resolveParts = require("./resolve-format-parts");
+const formatParts  = require("sprintf-kit/format-parts")
+    , resolveParts = require("./resolve-format-parts");
 
 module.exports = event => {
 	if (event.message) return event.message;
 	const { logger } = event;
 
-	const formatData = resolveParts(...event.messageTokens);
-	let { literals } = formatData;
+	const parts = resolveParts(...event.messageTokens);
 	if (logger.messageContentDecorator) {
-		literals = literals.map(literal => logger.messageContentDecorator(literal));
+		parts.literals = parts.literals.map(literal => logger.messageContentDecorator(literal));
 	}
-	const { substitutions, rest } = formatData;
-
-	event.messageContent = "";
-	if (literals.length) {
-		event.messageContent = literals.reduce(
-			(resolved, literal, index) => resolved + substitutions[index - 1] + literal
-		);
-	}
-	if (rest) event.messageContent += rest;
+	event.messageContent = formatParts(parts);
 
 	event.message = [logger.levelMessagePrefix, logger.namespaceMessagePrefix, event.messageContent]
 		.filter(Boolean)
