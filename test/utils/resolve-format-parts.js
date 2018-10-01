@@ -11,13 +11,14 @@ const resolveUncached = callback => {
 		return requireUncached(
 			[
 				require.resolve("log4/writer-utils/emitter"), require.resolve("log4"),
-				require.resolve("../../utils/parts-resolver"), require.resolve("supports-color"),
+				require.resolve("../../utils/resolve-format-parts"),
+				require.resolve("supports-color"),
 				require.resolve("../../lib/colors-support-level"),
 				require.resolve("../../lib/inspect-depth")
 			],
 			() => {
 				callback();
-				return require("../../utils/parts-resolver");
+				return require("../../utils/resolve-format-parts");
 			}
 		);
 	} finally {

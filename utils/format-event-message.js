@@ -1,6 +1,6 @@
 "use strict";
 
-const resolveParts = require("./parts-resolver");
+const resolveParts = require("./resolve-format-parts");
 
 module.exports = event => {
 	if (event.message) return event.message;
