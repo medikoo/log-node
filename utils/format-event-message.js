@@ -1,14 +1,9 @@
 "use strict";
 
-const toNaturalNumber    = require("es5-ext/number/to-pos-integer")
-    , getFormatResolver  = require("sprintf-kit/get-resolver")
+const getFormatResolver  = require("sprintf-kit/get-resolver")
     , getModifiers       = require("cli-sprintf-format/get-modifiers")
-    , colorsSupportLevel = require("../lib/colors-support-level");
-
-// Resolve intended inspect depth
-let inspectDepth = Number(process.env.LOG_INSPECT_DEPTH || process.env.DEBUG_DEPTH);
-if (inspectDepth && inspectDepth !== Infinity) inspectDepth = toNaturalNumber(inspectDepth);
-if (!inspectDepth) inspectDepth = null;
+    , colorsSupportLevel = require("../lib/colors-support-level")
+    , inspectDepth       = require("../lib/inspect-depth");
 
 const formatResolver = getFormatResolver(getModifiers({ inspectDepth, colorsSupportLevel }));
 
