@@ -1,11 +1,11 @@
 "use strict";
 
-const getFormatResolver  = require("sprintf-kit/get-resolver")
+const getPartsResolver   = require("sprintf-kit/get-parts-resolver")
     , getModifiers       = require("cli-sprintf-format/get-modifiers")
     , colorsSupportLevel = require("../lib/colors-support-level")
     , inspectDepth       = require("../lib/inspect-depth");
 
-const formatResolver = getFormatResolver(getModifiers({ inspectDepth, colorsSupportLevel }));
+const formatResolver = getPartsResolver(getModifiers({ inspectDepth, colorsSupportLevel }));
 
 module.exports = event => {
 	if (event.message) return event.message;
