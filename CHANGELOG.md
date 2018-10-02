@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/medikoo/log4-node/compare/v3.1.0...v3.1.1) (2018-10-02)
+
+
+### Bug Fixes
+
+* do not wrap raw strings that contain ansi codes ([1027877](https://github.com/medikoo/log4-node/commit/1027877))
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/medikoo/log4-node/compare/v3.0.0...v3.1.0) (2018-10-02)
 
