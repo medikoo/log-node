@@ -13,7 +13,8 @@ const resolveUncached = callback => {
 				require.resolve("log4/writer-utils/register-master"),
 				require.resolve("log4/writer-utils/setup-visibility"),
 				require.resolve("supports-color"), require.resolve("../lib/colors-support-level"),
-				require.resolve("../")
+				require.resolve("../utils/format-event-message"),
+				require.resolve("../utils/resolve-format-parts"), require.resolve("../")
 			],
 			() => {
 				callback();
@@ -59,13 +60,13 @@ test("log4-nodejs", t => {
 		const originalWrite = process.stderr.write;
 		process.stderr.write = string =>
 			t.equal(
-				string, "× \x1b[31msome \x1b[39mfoo\x1b[31m error\x1b[39m\n",
+				string, "× \x1b[31msome \x1b[39m\x1b[32mfoo\x1b[39m\x1b[31m error\x1b[39m\n",
 				"Should decorate error logs when colors are enabled"
 			);
 		log.error("some %s error", "foo");
 		process.stderr.write = string =>
 			t.equal(
-				string, "‼ \x1b[33msome \x1b[39m12\x1b[33m warning\x1b[39m\n",
+				string, "‼ \x1b[33msome \x1b[39m\x1b[33m12\x1b[39m\x1b[33m warning\x1b[39m\n",
 				"Should decorate warning logs when colors are enabled"
 			);
 		log.warning("some %d warning", 12);
