@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/medikoo/log4-node/compare/v3.0.0...v3.1.0) (2018-10-02)
+
+
+### Features
+
+* format util ([5d2d8fc](https://github.com/medikoo/log4-node/commit/5d2d8fc))
+* seclude inspectDepth resolution to lib ([073351d](https://github.com/medikoo/log4-node/commit/073351d))
+* seclude partsResolver util ([9a9b101](https://github.com/medikoo/log4-node/commit/9a9b101))
+* support raw string placeholder variant ([f6fd4ac](https://github.com/medikoo/log4-node/commit/f6fd4ac))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/medikoo/log4-node/compare/v2.3.1...v3.0.0) (2018-09-28)
 
