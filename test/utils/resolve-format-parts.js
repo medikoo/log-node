@@ -5,6 +5,11 @@ const d               = require("d")
     , requireUncached = require("cjs-module/require-uncached")
     , overrideEnv     = require("process-utils/override-env");
 
+const normalizeParts = parts => {
+	parts.substitutions = parts.substitutions.map(substitution => substitution.value);
+	return parts;
+};
+
 const resolveUncached = callback => {
 	const { restoreEnv } = overrideEnv();
 	try {
@@ -33,9 +38,11 @@ test("formatPartsResolver", t => {
 		);
 		const testObj = Object.defineProperties({ foo: "bar" }, { hidden: d("elo") });
 		t.deepEqual(
-			formatPartsResolver(
-				"foo bar %d %f %i %j %o %O then%s", 20.2, 21.21, 22.22, testObj, testObj, testObj,
-				"maro", "rest", "arg"
+			normalizeParts(
+				formatPartsResolver(
+					"foo bar %d %f %i %j %o %O then%s", 20.2, 21.21, 22.22, testObj, testObj,
+					testObj, "maro", "rest", "arg"
+				)
 			),
 			{
 				literals: ["foo bar ", " ", " ", " ", " ", " ", " then", ""],
@@ -55,7 +62,7 @@ test("formatPartsResolver", t => {
 		);
 
 		t.deepEqual(
-			formatPartsResolver("%j %j", { foo: "bar" }, 1),
+			normalizeParts(formatPartsResolver("%j %j", { foo: "bar" }, 1)),
 			{
 				literals: ["", " ", ""],
 				substitutions: ["{ \"foo\": \x1b[32m\"bar\"\x1b[39m }", "\x1b[33m1\x1b[39m"],
@@ -71,7 +78,7 @@ test("formatPartsResolver", t => {
 			require("supports-color").stderr = false;
 		});
 		t.deepEqual(
-			formatPartsResolver({ foo: 12, bar: { elo: { frelo: 22 } } }),
+			normalizeParts(formatPartsResolver({ foo: 12, bar: { elo: { frelo: 22 } } })),
 			{ literals: [], substitutions: [], rest: "{ foo: 12, bar: { elo: [Object] } }" },
 			"Supports customization of inspect depth via LOG_INSPECT_DEPTH var"
 		);
