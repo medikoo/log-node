@@ -1,6 +1,7 @@
 "use strict";
 
 const formatParts  = require("sprintf-kit/format-parts")
+    , hasAnsi      = require("has-ansi")
     , resolveParts = require("./resolve-format-parts");
 
 module.exports = event => {
@@ -12,7 +13,12 @@ module.exports = event => {
 		parts.literals = parts.literals.map(literal => logger.messageContentDecorator(literal));
 		for (const substitution of parts.substitutions) {
 			const { placeholder, value } = substitution;
-			if (placeholder.type === "s" && placeholder.flags && placeholder.flags.includes("#")) {
+			if (
+				placeholder.type === "s" &&
+				placeholder.flags &&
+				placeholder.flags.includes("#") &&
+				!hasAnsi(value)
+			) {
 				// Raw string
 				substitution.value = logger.messageContentDecorator(value);
 			}

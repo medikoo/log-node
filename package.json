@@ -20,6 +20,7 @@
     "cli-sprintf-format": "^1.1",
     "d": "1",
     "es5-ext": "^0.10.46",
+    "has-ansi": "3",
     "sprintf-kit": "2",
     "supports-color": "^5.5"
   },

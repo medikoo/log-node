@@ -52,7 +52,7 @@ test("log4-nodejs", t => {
 		t.end();
 	});
 	t.test(t => {
-		t.plan(3);
+		t.plan(4);
 		const { log, initializeWriter } = resolveUncached(
 			() => (require("supports-color").stderr = { level: 1 })
 		);
@@ -74,9 +74,17 @@ test("log4-nodejs", t => {
 			t.equal(
 				string,
 				"‼ \x1b[33msome \x1b[39m\x1b[33mmarko\nfoo\x1b[39m\x1b[33m warning\x1b[39m\n",
-				"Should decorate warning logs when colors are enabled"
+				"Should decorate raw strings in warning logs when colors are enabled"
 			);
 		log.warning("some %#s warning", "marko\nfoo");
+		process.stderr.write = string =>
+			t.equal(
+				string,
+				"‼ \x1b[33msome \x1b[39mmarko\n\x1b[33mfoo\x1b[39m\x1b[33m warning\x1b[39m\n",
+				"Should not decorate raw strings that contain ANSI codes in warning logs " +
+					"when colors are enabled"
+			);
+		log.warning("some %#s warning", "marko\n\x1b[33mfoo\x1b[39m");
 		process.stderr.write = originalWrite;
 	});
 	t.end();
