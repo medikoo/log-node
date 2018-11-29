@@ -6,7 +6,7 @@
 
 # log-node
 
-## [log](https://github.com/medikoo/log/) log writer for typical [Node.js](https://nodejs.org/) processes
+## [log](https://github.com/medikoo/log/) writer for typical [Node.js](https://nodejs.org/) processes
 
 -   [Printf-like message formatting](https://github.com/medikoo/log#output-message-formatting)
 -   Configure log level visbility threshold through [`LOG_LEVEL`](https://github.com/medikoo/log#log_level) env variable (defaults to `notice`)
