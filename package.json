@@ -1,6 +1,6 @@
 {
   "name": "log-node",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "Node.js log generator for log engine",
   "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
   "keywords": [
