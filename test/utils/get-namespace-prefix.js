@@ -9,15 +9,15 @@ const resolveUncached = callback => {
 	try {
 		return requireUncached(
 			[
-				require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-				require.resolve("log4/writer-utils/get-default-namespace"),
+				require.resolve("log"), require.resolve("log/writer-utils/emitter"),
+				require.resolve("log/writer-utils/get-default-namespace"),
 				require.resolve("../../utils/get-namespace-prefix"),
 				require.resolve("supports-color"), require.resolve("../../lib/colors-support-level")
 			],
 			() => {
 				callback();
 				return {
-					log: require("log4"),
+					log: require("log"),
 					getNamespacePrefix: require("../../utils/get-namespace-prefix")
 				};
 			}
@@ -77,7 +77,7 @@ test("getNamespacePrefix", t => {
 	t.test("Should not show default namespace", t => {
 		const { log, getNamespacePrefix } = resolveUncached(() => {
 			require("supports-color").stderr = false;
-			require("log4/writer-utils/get-default-namespace").set("marko");
+			require("log/writer-utils/get-default-namespace").set("marko");
 		});
 
 		t.equal(getNamespacePrefix(log.get("foo")), log.get("foo").namespace);
@@ -93,7 +93,7 @@ test("getNamespacePrefix", t => {
 				require("supports-color").stderr = false;
 				process.env.DEBUG_COLORS = "on";
 				return {
-					log: require("log4"),
+					log: require("log"),
 					getNamespacePrefix: require("../../utils/get-namespace-prefix")
 				};
 			});

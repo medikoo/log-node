@@ -4,13 +4,13 @@
 ![Transpilation status][transpilation-image]
 [![npm version][npm-image]][npm-url]
 
-# log4-nodejs
+# log-node
 
-## [log4](https://github.com/medikoo/log4/) log writer for typical [Node.js](https://nodejs.org/) processes
+## [log](https://github.com/medikoo/log/) log writer for typical [Node.js](https://nodejs.org/) processes
 
--   [Printf-like message formatting](https://github.com/medikoo/log4#output-message-formatting)
--   Configure log level visbility threshold through [`LOG_LEVEL`](https://github.com/medikoo/log4#log_level) env variable (defaults to `notice`)
--   Extra debug output can be controlled via [`LOG_DEBUG`](https://github.com/medikoo/log4#log_debug) env variable (fallbacks to `DEBUG` if provided)
+-   [Printf-like message formatting](https://github.com/medikoo/log#output-message-formatting)
+-   Configure log level visbility threshold through [`LOG_LEVEL`](https://github.com/medikoo/log#log_level) env variable (defaults to `notice`)
+-   Extra debug output can be controlled via [`LOG_DEBUG`](https://github.com/medikoo/log#log_debug) env variable (fallbacks to `DEBUG` if provided)
 -   Outputs colored logs if terminal supports it (can overriden through `DEBUG_COLORS` env variable)
 -   Object inspection depth defaults to `4`, but can be overriden via `LOG_INSPECT_DEPTH` (fallbacks to `DEBUG_DEPTH` if provided)
 -   Writes to `stderr` stream.
@@ -20,19 +20,19 @@
 At beginning of main module of your program invoke:
 
 ```javascript
-require("log4-nodejs")();
+require("log-node")();
 ```
 
 ### Tests
 
     $ npm test
 
-[nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/log4-nodejs/branches/master/shields_badge.svg
-[nix-build-url]: https://semaphoreci.com/medikoo-org/log4-nodejs
+[nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/log-node/branches/master/shields_badge.svg
+[nix-build-url]: https://semaphoreci.com/medikoo-org/log-node
 [win-build-image]: https://ci.appveyor.com/api/projects/status/tqetc30h571osc2n?svg=true
-[win-build-url]: https://ci.appveyor.com/project/medikoo/log4-nodejs
-[cov-image]: https://img.shields.io/codecov/c/github/medikoo/log4-nodejs.svg
-[cov-url]: https://codecov.io/gh/medikoo/log4-nodejs
+[win-build-url]: https://ci.appveyor.com/project/medikoo/log-node
+[cov-image]: https://img.shields.io/codecov/c/github/medikoo/log-node.svg
+[cov-url]: https://codecov.io/gh/medikoo/log-node
 [transpilation-image]: https://img.shields.io/badge/transpilation-free-brightgreen.svg
-[npm-image]: https://img.shields.io/npm/v/log4-nodejs.svg
-[npm-url]: https://www.npmjs.com/package/log4-nodejs
+[npm-image]: https://img.shields.io/npm/v/log-node.svg
+[npm-url]: https://www.npmjs.com/package/log-node

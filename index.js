@@ -3,11 +3,11 @@
 const isObject            = require("es5-ext/object/is-object")
     , d                   = require("d")
     , clc                 = require("cli-color/bare")
-    , rootLogger          = require("log4")
-    , emitter             = require("log4/writer-utils/emitter")
-    , registerMaster      = require("log4/writer-utils/register-master")
-    , setupVisibility     = require("log4/writer-utils/setup-visibility")
-    , setDefaultNamespace = require("log4/writer-utils/get-default-namespace").set
+    , rootLogger          = require("log")
+    , emitter             = require("log/writer-utils/emitter")
+    , registerMaster      = require("log/writer-utils/register-master")
+    , setupVisibility     = require("log/writer-utils/setup-visibility")
+    , setDefaultNamespace = require("log/writer-utils/get-default-namespace").set
     , colorsSupportLevel  = require("./lib/colors-support-level")
     , formatMessage       = require("./utils/format-event-message")
     , levelPrefixes       = require("./utils/level-prefixes")
@@ -33,7 +33,7 @@ const setupPrefixes = levelLogger => {
 module.exports = (options = {}) => {
 	if (!isObject(options)) options = {};
 
-	// Ensure it's the only log4 writer initialzed in a process
+	// Ensure it's the only log writer initialzed in a process
 	registerMaster();
 
 	if (options.defaultNamespace) setDefaultNamespace(options.defaultNamespace);

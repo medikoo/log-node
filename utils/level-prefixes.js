@@ -2,7 +2,7 @@
 
 const entries            = require("es5-ext/object/entries")
     , clc                = require("cli-color/bare")
-    , defaultSymbols     = require("log4/writer-utils/level-symbols")
+    , defaultSymbols     = require("log/writer-utils/level-symbols")
     , colorsSupportLevel = require("../lib/colors-support-level");
 
 const symbols = (() => {
@@ -23,7 +23,7 @@ if (!colorsSupportLevel) {
 	module.exports = symbols;
 	return;
 }
-const coloredSymbols = module.exports = {};
+const coloredSymbols = (module.exports = {});
 for (const [levelName, colorDecorator] of entries({
 	debug: clc.blackBright,
 	info: clc.blueBright,

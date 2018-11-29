@@ -15,7 +15,7 @@ const resolveUncached = callback => {
 	try {
 		return requireUncached(
 			[
-				require.resolve("log4/writer-utils/emitter"), require.resolve("log4"),
+				require.resolve("log/writer-utils/emitter"), require.resolve("log"),
 				require.resolve("../../utils/resolve-format-parts"),
 				require.resolve("supports-color"),
 				require.resolve("../../lib/colors-support-level"),

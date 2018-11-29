@@ -9,16 +9,16 @@ const resolveUncached = callback => {
 	try {
 		return requireUncached(
 			[
-				require.resolve("log4"), require.resolve("log4/writer-utils/emitter"),
-				require.resolve("log4/writer-utils/register-master"),
-				require.resolve("log4/writer-utils/setup-visibility"),
+				require.resolve("log"), require.resolve("log/writer-utils/emitter"),
+				require.resolve("log/writer-utils/register-master"),
+				require.resolve("log/writer-utils/setup-visibility"),
 				require.resolve("supports-color"), require.resolve("../lib/colors-support-level"),
 				require.resolve("../utils/format-event-message"),
 				require.resolve("../utils/resolve-format-parts"), require.resolve("../")
 			],
 			() => {
 				callback();
-				return { log: require("log4"), initializeWriter: require("../") };
+				return { log: require("log"), initializeWriter: require("../") };
 			}
 		);
 	} finally {
@@ -26,7 +26,7 @@ const resolveUncached = callback => {
 	}
 };
 
-test("log4-nodejs", t => {
+test("log-nodejs", t => {
 	t.test(t => {
 		const { log, initializeWriter } = resolveUncached(
 			() => (require("supports-color").stderr = false)
