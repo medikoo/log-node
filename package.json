@@ -28,11 +28,12 @@
     "cjs-module": "^1.5.0",
     "eslint": "^5.15.1",
     "eslint-config-medikoo": "^1.44.0",
+    "essentials": "^1.0.0",
     "istanbul": "^0.4.5",
     "log": "^3.2.0",
     "process-utils": "^2.0.1",
     "tape": "^4.10.1",
-    "tape-index": "^2.0.0"
+    "tape-index": "^3.0.1"
   },
   "peerDependencies": {
     "log": "^3.1"
