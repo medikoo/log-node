@@ -10,7 +10,7 @@ const resolveUncached = callback => {
 		return requireUncached(
 			[
 				require.resolve("../../utils/level-prefixes"), require.resolve("supports-color"),
-				require.resolve("../../lib/colors-support-level")
+				require.resolve("../../lib/private/colors-support-level")
 			],
 			callback
 		);

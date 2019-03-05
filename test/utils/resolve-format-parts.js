@@ -18,8 +18,8 @@ const resolveUncached = callback => {
 				require.resolve("log/writer-utils/emitter"), require.resolve("log"),
 				require.resolve("../../utils/resolve-format-parts"),
 				require.resolve("supports-color"),
-				require.resolve("../../lib/colors-support-level"),
-				require.resolve("../../lib/inspect-depth")
+				require.resolve("../../lib/private/colors-support-level"),
+				require.resolve("../../lib/private/inspect-depth")
 			],
 			() => {
 				callback();

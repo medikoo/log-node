@@ -1,7 +1,7 @@
 "use strict";
 
 const getDefaultNamespace = require("log/writer-utils/get-default-namespace")
-    , colorsSupportLevel  = require("../lib/colors-support-level");
+    , colorsSupportLevel  = require("../lib/private/colors-support-level");
 
 const resolveNamespaceString = logger => {
 	if (!logger.namespace) return null;

@@ -14,8 +14,8 @@ const resolveUncached = callback => {
 				require.resolve("../../utils/resolve-format-parts"),
 				require.resolve("../../utils/format-event-message"),
 				require.resolve("supports-color"),
-				require.resolve("../../lib/colors-support-level"),
-				require.resolve("../../lib/inspect-depth")
+				require.resolve("../../lib/private/colors-support-level"),
+				require.resolve("../../lib/private/inspect-depth")
 			],
 			() => {
 				callback();

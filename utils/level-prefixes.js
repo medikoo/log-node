@@ -3,7 +3,7 @@
 const entries            = require("es5-ext/object/entries")
     , clc                = require("cli-color/bare")
     , defaultSymbols     = require("log/writer-utils/level-symbols")
-    , colorsSupportLevel = require("../lib/colors-support-level");
+    , colorsSupportLevel = require("../lib/private/colors-support-level");
 
 const symbols = (() => {
 	if (process.platform !== "win32" && colorsSupportLevel >= 2) return defaultSymbols;
