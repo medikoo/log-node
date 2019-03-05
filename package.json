@@ -1,59 +1,59 @@
 {
-  "name": "log-node",
-  "version": "3.2.1",
-  "description": "Node.js log generator for log engine",
-  "author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
-  "keywords": [
-    "log",
-    "log",
-    "logger",
-    "debug",
-    "bunyan",
-    "winston"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/medikoo/log-node.git"
-  },
-  "dependencies": {
-    "cli-color": "^1.4.0",
-    "cli-sprintf-format": "^1.1.0",
-    "d": "^1.0.0",
-    "es5-ext": "^0.10.48",
-    "has-ansi": "^3.0.0",
-    "sprintf-kit": "^2.0.0",
-    "supports-color": "^6.1.0"
-  },
-  "devDependencies": {
-    "cjs-module": "^1.5.0",
-    "eslint": "^5.15.1",
-    "eslint-config-medikoo": "^1.44.0",
-    "essentials": "^1.0.0",
-    "istanbul": "^0.4.5",
-    "log": "^3.2.0",
-    "process-utils": "^2.0.1",
-    "tape": "^4.10.1",
-    "tape-index": "^3.0.1"
-  },
-  "peerDependencies": {
-    "log": "^3.1"
-  },
-  "eslintConfig": {
-    "extends": "medikoo",
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "rules": {
-      "id-length": "off",
-      "no-bitwise": "off"
-    }
-  },
-  "scripts": {
-    "coverage": "tape-index && istanbul cover test.index.js",
-    "check-coverage": "npm run coverage && istanbul check-coverage --statements 100 --function 100 --branches 100 --lines 100",
-    "lint": "eslint --ignore-path=.gitignore .",
-    "test": "tape-index && node test.index.js"
-  },
-  "license": "ISC"
+	"name": "log-node",
+	"version": "3.2.1",
+	"description": "Node.js log generator for log engine",
+	"author": "Mariusz Nowak <medyk@medikoo.com> (http://www.medikoo.com/)",
+	"keywords": [
+		"log",
+		"log",
+		"logger",
+		"debug",
+		"bunyan",
+		"winston"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/medikoo/log-node.git"
+	},
+	"dependencies": {
+		"cli-color": "^1.4.0",
+		"cli-sprintf-format": "^1.1.0",
+		"d": "^1.0.0",
+		"es5-ext": "^0.10.48",
+		"has-ansi": "^3.0.0",
+		"sprintf-kit": "^2.0.0",
+		"supports-color": "^6.1.0"
+	},
+	"devDependencies": {
+		"cjs-module": "^1.5.0",
+		"eslint": "^5.15.1",
+		"eslint-config-medikoo": "^1.44.0",
+		"essentials": "^1.0.0",
+		"istanbul": "^0.4.5",
+		"log": "^3.2.0",
+		"process-utils": "^2.0.1",
+		"tape": "^4.10.1",
+		"tape-index": "^3.0.1"
+	},
+	"peerDependencies": {
+		"log": "^3.1"
+	},
+	"eslintConfig": {
+		"extends": "medikoo",
+		"root": true,
+		"env": {
+			"node": true
+		},
+		"rules": {
+			"id-length": "off",
+			"no-bitwise": "off"
+		}
+	},
+	"scripts": {
+		"coverage": "tape-index && istanbul cover test.index.js",
+		"check-coverage": "npm run coverage && istanbul check-coverage --statements 100 --function 100 --branches 100 --lines 100",
+		"lint": "eslint --ignore-path=.gitignore .",
+		"test": "tape-index && node test.index.js"
+	},
+	"license": "ISC"
 }
