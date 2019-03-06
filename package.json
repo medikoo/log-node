@@ -27,7 +27,7 @@
 	"devDependencies": {
 		"cjs-module": "^1.5.0",
 		"eslint": "^5.15.1",
-		"eslint-config-medikoo": "^1.44.0",
+		"eslint-config-medikoo": "^2.1.1",
 		"essentials": "^1.0.0",
 		"git-list-updated": "^1.1.2",
 		"husky": "^1.3.1",
