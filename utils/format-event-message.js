@@ -1,8 +1,11 @@
 "use strict";
 
-const formatParts  = require("sprintf-kit/format-parts")
-    , hasAnsi      = require("has-ansi")
-    , resolveParts = require("./resolve-format-parts");
+const formatParts          = require("sprintf-kit/format-parts")
+    , hasAnsi              = require("has-ansi")
+    , getTimestampResolver = require("log/lib/get-timestamp-resolver")
+    , resolveParts         = require("./resolve-format-parts");
+
+const resolveTimestamp = process.env.LOG_TIME ? getTimestampResolver(process.env.LOG_TIME) : null;
 
 module.exports = event => {
 	if (event.message) return event.message;
@@ -24,9 +27,13 @@ module.exports = event => {
 			}
 		}
 	}
+	if (resolveTimestamp) event.messageTimestamp = resolveTimestamp();
 	event.messageContent = formatParts(parts);
 
-	event.message = [logger.levelMessagePrefix, logger.namespaceMessagePrefix, event.messageContent]
+	event.message = [
+		event.messageTimestamp, logger.levelMessagePrefix, logger.namespaceMessagePrefix,
+		event.messageContent
+	]
 		.filter(Boolean)
 		.join(" ");
 	return event.message;
