@@ -1,6 +1,6 @@
 "use strict";
 
-const getDefaultNamespace = require("log/writer-utils/get-default-namespace")
+const getDefaultNamespace = require("log/lib/get-default-namespace")
     , colorsSupportLevel  = require("../lib/private/colors-support-level");
 
 const resolveNamespaceString = logger => {
