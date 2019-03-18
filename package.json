@@ -19,14 +19,14 @@
 		"cli-color": "^1.4.0",
 		"cli-sprintf-format": "^1.1.0",
 		"d": "^1.0.0",
-		"es5-ext": "^0.10.48",
+		"es5-ext": "^0.10.49",
 		"has-ansi": "^3.0.0",
 		"sprintf-kit": "^2.0.0",
 		"supports-color": "^6.1.0"
 	},
 	"devDependencies": {
 		"cjs-module": "^1.5.0",
-		"eslint": "^5.15.1",
+		"eslint": "^5.15.2",
 		"eslint-config-medikoo": "^2.1.1",
 		"essentials": "^1.0.0",
 		"git-list-updated": "^1.1.2",
