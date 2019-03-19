@@ -12,7 +12,7 @@ const resolveUncached = callback => {
 				require.resolve("log"), require.resolve("log/lib/private/logger-prototype"),
 				require.resolve("log/lib/emitter"),
 				require.resolve("log/lib/get-default-namespace"),
-				require.resolve("../../utils/get-namespace-prefix"),
+				require.resolve("../../lib/get-namespace-prefix"),
 				require.resolve("supports-color"),
 				require.resolve("../../lib/private/colors-support-level")
 			],
@@ -20,7 +20,7 @@ const resolveUncached = callback => {
 				callback();
 				return {
 					log: require("log"),
-					getNamespacePrefix: require("../../utils/get-namespace-prefix")
+					getNamespacePrefix: require("../../lib/get-namespace-prefix")
 				};
 			}
 		);
@@ -96,7 +96,7 @@ test("getNamespacePrefix", t => {
 				process.env.DEBUG_COLORS = "on";
 				return {
 					log: require("log"),
-					getNamespacePrefix: require("../../utils/get-namespace-prefix")
+					getNamespacePrefix: require("../../lib/get-namespace-prefix")
 				};
 			});
 
