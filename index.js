@@ -13,12 +13,12 @@ const isObject            = require("es5-ext/object/is-object")
     , levelPrefixes       = require("./utils/level-prefixes")
     , getNamespacePrefix  = require("./utils/get-namespace-prefix");
 
-const WARNING_LEVEL_INDEX = 3, ERROR_LEVEL_INDEX = 4;
+const WARNING_LEVEL_INDEX = 1, ERROR_LEVEL_INDEX = 0;
 
 const setupPrefixes = levelLogger => {
 	levelLogger.levelMessagePrefix = levelPrefixes[levelLogger.level];
 	if (colorsSupportLevel) {
-		if (levelLogger.levelIndex >= ERROR_LEVEL_INDEX) {
+		if (levelLogger.levelIndex === ERROR_LEVEL_INDEX) {
 			levelLogger.messageContentDecorator = clc.red;
 		} else if (levelLogger.levelIndex === WARNING_LEVEL_INDEX) {
 			levelLogger.messageContentDecorator = clc.yellow;
