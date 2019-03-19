@@ -17,14 +17,14 @@ const resolveUncached = callback => {
 			[
 				require.resolve("log/lib/emitter"), require.resolve("log"),
 				require.resolve("log/lib/private/logger-prototype"),
-				require.resolve("../../utils/resolve-format-parts"),
+				require.resolve("../../lib/resolve-format-parts"),
 				require.resolve("supports-color"),
 				require.resolve("../../lib/private/colors-support-level"),
 				require.resolve("../../lib/private/inspect-depth")
 			],
 			() => {
 				callback();
-				return require("../../utils/resolve-format-parts");
+				return require("../../lib/resolve-format-parts");
 			}
 		);
 	} finally {
