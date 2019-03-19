@@ -10,7 +10,7 @@ const isObject            = require("es5-ext/object/is-object")
     , setDefaultNamespace = require("log/lib/get-default-namespace").set
     , colorsSupportLevel  = require("./lib/private/colors-support-level")
     , formatMessage       = require("./lib/format-event-message")
-    , levelPrefixes       = require("./utils/level-prefixes")
+    , levelPrefixes       = require("./lib/level-prefixes")
     , getNamespacePrefix  = require("./lib/get-namespace-prefix");
 
 const WARNING_LEVEL_INDEX = 1, ERROR_LEVEL_INDEX = 0;
