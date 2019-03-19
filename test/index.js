@@ -13,7 +13,7 @@ const resolveUncached = callback => {
 				require.resolve("log/lib/emitter"), require.resolve("log/lib/register-master"),
 				require.resolve("log/lib/setup-visibility"), require.resolve("supports-color"),
 				require.resolve("../lib/private/colors-support-level"),
-				require.resolve("../utils/format-event-message"),
+				require.resolve("../lib/format-event-message"),
 				require.resolve("../utils/resolve-format-parts"), require.resolve("../")
 			],
 			() => {
