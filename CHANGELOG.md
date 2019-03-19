@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [5.1.0](https://github.com/medikoo/log-node/compare/v5.0.0...v5.1.0) (2019-03-19)
+
+### Features
+
+-   dim log timestamps ([f85a103](https://github.com/medikoo/log-node/commit/f85a103))
+
 # [5.0.0](https://github.com/medikoo/log-node/compare/v4.0.0...v5.0.0) (2019-03-19)
 
 ### Features
