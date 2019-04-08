@@ -1,58 +1,58 @@
 "use strict";
 
-const isObject            = require("es5-ext/object/is-object")
-    , d                   = require("d")
-    , clc                 = require("cli-color/bare")
-    , rootLogger          = require("log")
-    , emitter             = require("log/lib/emitter")
-    , registerMaster      = require("log/lib/register-master")
-    , setupVisibility     = require("log/lib/setup-visibility")
-    , setDefaultNamespace = require("log/lib/get-default-namespace").set
-    , colorsSupportLevel  = require("./lib/private/colors-support-level")
-    , formatMessage       = require("./lib/format-event-message")
-    , levelPrefixes       = require("./lib/level-prefixes")
-    , getNamespacePrefix  = require("./lib/get-namespace-prefix");
+const formatParts                  = require("sprintf-kit/format-parts")
+    , hasAnsi                      = require("has-ansi")
+    , { blackBright, red, yellow } = require("cli-color/bare")
+    , LogWriter                    = require("log/lib/writer")
+    , colorsSupportLevel           = require("./lib/private/colors-support-level")
+    , levelPrefixes                = require("./lib/level-prefixes")
+    , getNamespacePrefix           = require("./lib/get-namespace-prefix")
+    , resolveParts                 = require("./lib/resolve-format-parts");
 
 const WARNING_LEVEL_INDEX = 1, ERROR_LEVEL_INDEX = 0;
 
-const setupPrefixes = levelLogger => {
-	levelLogger.levelMessagePrefix = levelPrefixes[levelLogger.level];
-	if (colorsSupportLevel) {
+class NodeLogWriter extends LogWriter {
+	constructor(options = {}) { super(process.env, options); }
+	setupLevelLogger(logger) {
+		super.setupLevelLogger(logger);
+		if (colorsSupportLevel) this.setupLevelMessageDecorator(logger);
+	}
+	setupLevelMessageDecorator(levelLogger) {
 		if (levelLogger.levelIndex === ERROR_LEVEL_INDEX) {
-			levelLogger.messageContentDecorator = clc.red;
+			levelLogger.messageContentDecorator = red;
 		} else if (levelLogger.levelIndex === WARNING_LEVEL_INDEX) {
-			levelLogger.messageContentDecorator = clc.yellow;
+			levelLogger.messageContentDecorator = yellow;
 		}
 	}
-	Object.defineProperty(
-		levelLogger, "namespaceMessagePrefix",
-		d.gs(function () { return getNamespacePrefix(this); })
-	);
-};
+	resolveMessageTimestamp(event) {
+		super.resolveMessageTimestamp(event);
+		if (!colorsSupportLevel) return;
+		if (event.messageTimestamp) event.messageTimestamp = blackBright(event.messageTimestamp);
+	}
+	resolveMessageContent(event) {
+		const { logger } = event;
+		const parts = resolveParts(...event.messageTokens);
+		if (logger.messageContentDecorator) {
+			parts.literals = parts.literals.map(literal => logger.messageContentDecorator(literal));
+			for (const substitution of parts.substitutions) {
+				const { placeholder, value } = substitution;
+				if (
+					placeholder.type === "s" &&
+					placeholder.flags &&
+					placeholder.flags.includes("#") &&
+					!hasAnsi(value)
+				) {
+					// Raw string
+					substitution.value = logger.messageContentDecorator(value);
+				}
+			}
+		}
+		event.messageContent = formatParts(parts);
+	}
+	writeMessage(event) { process.stderr.write(`${ event.message }\n`); }
+}
+NodeLogWriter.levelPrefixes = levelPrefixes;
 
-module.exports = (options = {}) => {
-	if (!isObject(options)) options = {};
+if (colorsSupportLevel) NodeLogWriter.resolveNamespaceMessagePrefix = getNamespacePrefix;
 
-	// Ensure it's the only log writer initialzed in a process
-	registerMaster();
-
-	if (options.defaultNamespace) setDefaultNamespace(options.defaultNamespace);
-
-	// Read logs visiblity settings from env variables
-	setupVisibility(
-		process.env.LOG_LEVEL, (process.env.LOG_DEBUG || process.env.DEBUG || "").split(",")
-	);
-
-	// Resolve level and namespace log message prefixes
-	// - for already initialized loggers
-	rootLogger.getAllInitializedLevels().forEach(setupPrefixes);
-	// - for loggers to be initialized
-	emitter.on("init", event => { if (!event.logger.namespace) setupPrefixes(event.logger); });
-
-	// Write logs to stderr
-	emitter.on("log", event => {
-		if (!event.logger.isEnabled) return;
-		formatMessage(event);
-		process.stderr.write(`${ event.message }\n`);
-	});
-};
+module.exports = (options = {}) => new NodeLogWriter(options);
