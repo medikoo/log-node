@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [6.0.0](https://github.com/medikoo/log-node/compare/v5.1.0...v6.0.0) (2019-04-08)
+
+### Features
+
+-   upgrade configuration ot use LogWriter ([7ac81e3](https://github.com/medikoo/log-node/commit/7ac81e3))
+
+### BREAKING CHANGES
+
+-   Removed format and formatEventMessage utilties
+
 # [5.1.0](https://github.com/medikoo/log-node/compare/v5.0.0...v5.1.0) (2019-03-19)
 
 ### Features
