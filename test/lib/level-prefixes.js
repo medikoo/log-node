@@ -1,7 +1,7 @@
 "use strict";
 
 const test            = require("tape")
-    , requireUncached = require("cjs-module/require-uncached")
+    , requireUncached = require("ncjsm/require-uncached")
     , overrideEnv     = require("process-utils/override-env");
 
 const resolveUncached = callback => {

@@ -1,6 +1,6 @@
 "use strict";
 
-const requireUncached = require("cjs-module/require-uncached")
+const requireUncached = require("ncjsm/require-uncached")
     , overrideEnv     = require("process-utils/override-env");
 
 module.exports = callback => {
