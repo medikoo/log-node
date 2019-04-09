@@ -27,7 +27,7 @@ const resolveUncached = callback => {
 	}
 };
 
-test("log-nodejs", t => {
+test("(main)", t => {
 	t.test(t => {
 		const { log, initializeWriter } = resolveUncached(
 			() => (require("supports-color").stderr = false)
