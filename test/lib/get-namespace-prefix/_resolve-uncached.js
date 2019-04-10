@@ -8,7 +8,7 @@ module.exports = callback => {
 	try {
 		return requireUncached(
 			[
-				require.resolve("log"), require.resolve("log/lib/writer"),
+				require.resolve("log"), require.resolve("log/lib/abstract-writer"),
 				require.resolve("log/lib/private/logger-prototype"),
 				require.resolve("log/lib/emitter"),
 				require.resolve("log/lib/get-default-namespace"),
