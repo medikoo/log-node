@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [7.0.0](https://github.com/medikoo/log-node/compare/v6.1.0...v7.0.0) (2019-04-10)
+
+### Features
+
+-   upgrade to log v6 ([2c6a2ee](https://github.com/medikoo/log-node/commit/2c6a2ee))
+
+### BREAKING CHANGES
+
+-   Drop support for log v5
+
 # [6.1.0](https://github.com/medikoo/log-node/compare/v6.0.1...v6.1.0) (2019-04-09)
 
 ### Features
