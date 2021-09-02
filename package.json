@@ -37,7 +37,7 @@
 		"nyc": "^15.1.0",
 		"prettier-elastic": "^1.19.1",
 		"process-utils": "^4.0.0",
-		"tape": "^4.14.0",
+		"tape": "^5.3.1",
 		"tape-index": "^3.1.0"
 	},
 	"peerDependencies": {
