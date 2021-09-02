@@ -22,7 +22,8 @@
 		"es5-ext": "^0.10.49",
 		"has-ansi": "^3.0.0",
 		"sprintf-kit": "^2.0.0",
-		"supports-color": "^6.1.0"
+		"supports-color": "^6.1.0",
+		"type": "^2.5.0"
 	},
 	"devDependencies": {
 		"eslint": "^5.16.0",
