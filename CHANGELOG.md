@@ -1,6 +1,23 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [8.0.0](https://github.com/medikoo/log-node/compare/v7.0.0...v8.0.0) (2021-09-02)
+
+### ⚠ BREAKING CHANGES
+
+- Node.js version 10 or later is required (dropped support for v6 and v8)
+
+### Features
+
+- Allow to customize `env` in writer constructor ([01bfaae](https://github.com/medikoo/log-node/commit/01bfaae6f6ae7454da0461d9eccc56c265a96299))
+
+### Maintenance Improvements
+
+- Drop support for Node.js versions below v10 ([83bba3e](https://github.com/medikoo/log-node/commit/83bba3e31b7929b5b38975f4c9671c7f3df014d6))
+- Upgrade `has-ansi` to v4 ([caf610c](https://github.com/medikoo/log-node/commit/caf610cc5a80dccc30403ee9dedf9964e703367e))
+- Upgrade `supports-color` to v8 ([8b6f1d5](https://github.com/medikoo/log-node/commit/8b6f1d5c77d729f6f514d265ef9d0490456f8601))
+- Upgrade to `cli-color` v2 ([7ebe5f8](https://github.com/medikoo/log-node/commit/7ebe5f83341e2a125af392c09881a7331cf8fc0a))
 
 # [7.0.0](https://github.com/medikoo/log-node/compare/v6.1.0...v7.0.0) (2019-04-10)
 
