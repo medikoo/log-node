@@ -16,7 +16,7 @@
 		"url": "https://github.com/medikoo/log-node.git"
 	},
 	"dependencies": {
-		"cli-color": "^1.4.0",
+		"cli-color": "^2.0.0",
 		"cli-sprintf-format": "^1.1.0",
 		"d": "^1.0.1",
 		"es5-ext": "^0.10.53",
