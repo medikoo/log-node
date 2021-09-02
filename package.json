@@ -34,7 +34,7 @@
 		"lint-staged": "^11.1.2",
 		"log": "^6.0.0",
 		"ncjsm": "^4.2.0",
-		"nyc": "^13.3.0",
+		"nyc": "^15.1.0",
 		"prettier-elastic": "^1.19.1",
 		"process-utils": "^2.6.0",
 		"tape": "^4.14.0",
