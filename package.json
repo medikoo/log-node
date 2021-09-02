@@ -35,7 +35,7 @@
 		"log": "^6.0.0",
 		"ncjsm": "^4.2.0",
 		"nyc": "^15.1.0",
-		"prettier-elastic": "^1.19.1",
+		"prettier-elastic": "^2.2.1",
 		"process-utils": "^4.0.0",
 		"tape": "^5.3.1",
 		"tape-index": "^3.1.0"
