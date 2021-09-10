@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.1](https://github.com/medikoo/log-node/compare/v8.0.0...v8.0.1) (2021-09-10)
+
+### Maintenance Improvements
+
+- Do not apply decorators on empty message ([e2d03d7](https://github.com/medikoo/log-node/commit/e2d03d7f0e193e3e0b77f7ad9b828b07ddf12fdb))
+
 ## [8.0.0](https://github.com/medikoo/log-node/compare/v7.0.0...v8.0.0) (2021-09-02)
 
 ### ⚠ BREAKING CHANGES
