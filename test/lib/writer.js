@@ -7,25 +7,11 @@ const test            = require("tape")
 const resolveUncached = callback => {
 	const { restoreEnv } = overrideEnv();
 	try {
-		return requireUncached(
-			[
-				require.resolve("log"), require.resolve("log/lib/abstract-writer"),
-				require.resolve("log/lib/private/logger-prototype"),
-				require.resolve("log/lib/emitter"), require.resolve("log/lib/get-master-writer"),
-				require.resolve("log/lib/setup-visibility"), require.resolve("supports-color"),
-				require.resolve("../../lib/private/colors-support-level"),
-				require.resolve("../../lib/resolve-format-parts"),
-				require.resolve("../../lib/writer")
-			],
-			() => {
-				callback();
-				const LogNodeWriter = require("../../lib/writer");
-				return {
-					log: require("log"),
-					initializeWriter: options => new LogNodeWriter(options)
-				};
-			}
-		);
+		return requireUncached(() => {
+			callback();
+			const LogNodeWriter = require("../../lib/writer");
+			return { log: require("log"), initializeWriter: options => new LogNodeWriter(options) };
+		});
 	} finally {
 		restoreEnv();
 	}
@@ -65,27 +51,33 @@ test("lib/writer", t => {
 		const originalWrite = process.stderr.write;
 		process.stderr.write = string =>
 			t.equal(
-				string, "× \x1b[31msome \x1b[39m\x1b[32mfoo\x1b[39m\x1b[31m error\x1b[39m\n",
+				string,
+				"\x1B[91m×\x1B[39m \x1b[31msome \x1b[39m" +
+					"\x1b[32mfoo\x1b[39m\x1b[31m error\x1b[39m\n",
 				"Should decorate error logs when colors are enabled"
 			);
 		log.error("some %s error", "foo");
 		process.stderr.write = string =>
 			t.equal(
-				string, "‼ \x1b[33msome \x1b[39m\x1b[33m12\x1b[39m\x1b[33m warning\x1b[39m\n",
+				string,
+				"\x1B[93m‼\x1B[39m \x1b[33msome \x1b[39m\x1b[33m12" +
+					"\x1b[39m\x1b[33m warning\x1b[39m\n",
 				"Should decorate warning logs when colors are enabled"
 			);
 		log.warning("some %d warning", 12);
 		process.stderr.write = string =>
 			t.equal(
 				string,
-				"‼ \x1b[33msome \x1b[39m\x1b[33mmarko\nfoo\x1b[39m\x1b[33m warning\x1b[39m\n",
+				"\x1B[93m‼\x1B[39m \x1b[33msome \x1b[39m" +
+					"\x1b[33mmarko\nfoo\x1b[39m\x1b[33m warning\x1b[39m\n",
 				"Should decorate raw strings in warning logs when colors are enabled"
 			);
 		log.warning("some %#s warning", "marko\nfoo");
 		process.stderr.write = string =>
 			t.equal(
 				string,
-				"‼ \x1b[33msome \x1b[39mmarko\n\x1b[33mfoo\x1b[39m\x1b[33m warning\x1b[39m\n",
+				"\x1B[93m‼\x1B[39m \x1b[33msome \x1b[39mmarko\n" +
+					"\x1b[33mfoo\x1b[39m\x1b[33m warning\x1b[39m\n",
 				"Should not decorate raw strings that contain ANSI codes in warning logs " +
 					"when colors are enabled"
 			);
