@@ -1,13 +1,20 @@
 "use strict";
 
-const test            = require("tape")
+const path            = require("path")
+    , test            = require("tape")
     , requireUncached = require("ncjsm/require-uncached")
+    , resolveSync     = require("ncjsm/resolve/sync")
     , overrideEnv     = require("process-utils/override-env");
 
 const resolveUncached = callback => {
 	const { restoreEnv } = overrideEnv();
 	try {
 		return requireUncached(() => {
+			const uniGlobalPath = resolveSync(path.dirname(require.resolve("log")), "uni-global")
+				.realPath;
+			const uniGlobal = {};
+			require(uniGlobalPath);
+			require.cache[uniGlobalPath].exports = function () { return uniGlobal; };
 			callback();
 			const LogNodeWriter = require("../../lib/writer");
 			return { log: require("log"), initializeWriter: options => new LogNodeWriter(options) };
