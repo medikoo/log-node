@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.2](https://github.com/medikoo/log-node/compare/v8.0.1...v8.0.2) (2021-10-22)
+
+### Maintenance Improvements
+
+- Remove `has-ansi` dependency due to security issues ([#6](https://github.com/medikoo/log-node/issues/6)) ([5813577](https://github.com/medikoo/log-node/commit/5813577de14e8f91fcf1f0fbae66de3437fdc0b5)) ([Gareth Jones](https://github.com/G-Rath))
+
 ### [8.0.1](https://github.com/medikoo/log-node/compare/v8.0.0...v8.0.1) (2021-09-10)
 
 ### Maintenance Improvements
