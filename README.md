@@ -1,7 +1,5 @@
-[![*nix build status][nix-build-image]][nix-build-url]
-[![Windows build status][win-build-image]][win-build-url]
+[![Build status][build-image]][build-url]
 [![Tests coverage][cov-image]][cov-url]
-![Transpilation status][transpilation-image]
 [![npm version][npm-image]][npm-url]
 
 # log-node
@@ -28,12 +26,9 @@ require("log-node")();
 
     $ npm test
 
-[nix-build-image]: https://semaphoreci.com/api/v1/medikoo-org/log-node/branches/master/shields_badge.svg
-[nix-build-url]: https://semaphoreci.com/medikoo-org/log-node
-[win-build-image]: https://ci.appveyor.com/api/projects/status/tqetc30h571osc2n?svg=true
-[win-build-url]: https://ci.appveyor.com/project/medikoo/log-node
+[build-image]: https://github.com/medikoo/log-node/workflows/Integrate/badge.svg
+[build-url]: https://github.com/medikoo/log-node/actions?query=workflow%3AIntegrate
 [cov-image]: https://img.shields.io/codecov/c/github/medikoo/log-node.svg
 [cov-url]: https://codecov.io/gh/medikoo/log-node
-[transpilation-image]: https://img.shields.io/badge/transpilation-free-brightgreen.svg
 [npm-image]: https://img.shields.io/npm/v/log-node.svg
 [npm-url]: https://www.npmjs.com/package/log-node
