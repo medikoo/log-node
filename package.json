@@ -17,8 +17,8 @@
 	},
 	"dependencies": {
 		"ansi-regex": "^5.0.1",
-		"cli-color": "^2.0.0",
-		"cli-sprintf-format": "^1.1.0",
+		"cli-color": "^2.0.1",
+		"cli-sprintf-format": "^1.1.1",
 		"d": "^1.0.1",
 		"es5-ext": "^0.10.53",
 		"sprintf-kit": "^2.0.1",
@@ -27,19 +27,19 @@
 	},
 	"devDependencies": {
 		"eslint": "^7.32.0",
-		"eslint-config-medikoo": "^4.1.0",
-		"essentials": "^1.1.1",
+		"eslint-config-medikoo": "^4.1.1",
+		"essentials": "^1.2.0",
 		"git-list-updated": "^1.2.1",
 		"github-release-from-cc-changelog": "^2.2.0",
 		"husky": "^4.3.8",
-		"lint-staged": "^11.1.2",
+		"lint-staged": "^11.2.6",
 		"log": "^6.3.1",
 		"ncjsm": "^4.2.0",
 		"nyc": "^15.1.0",
 		"prettier-elastic": "^2.2.1",
 		"process-utils": "^4.0.0",
-		"tape": "^5.3.1",
-		"tape-index": "^3.1.0"
+		"tape": "^5.3.2",
+		"tape-index": "^3.2.0"
 	},
 	"peerDependencies": {
 		"log": "^6.0.0"
